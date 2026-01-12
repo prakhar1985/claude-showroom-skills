@@ -73,15 +73,15 @@ cp .claude/prompts/* ~/.claude/prompts/
 The `verify-content` skill requires all 11 prompt files to function. These prompts have unique Showroom-specific names and won't overwrite your custom prompts.
 ====
 
-== Step 4: Optionally Copy Docs and Templates
+== Step 4: Copy Docs and Templates
 
 [source,bash]
 ----
-# Optional: Copy shared documentation
+# Copy shared documentation
 mkdir -p ~/.claude/docs
 cp -r .claude/docs/* ~/.claude/docs/
 
-# Optional: Copy reference templates
+# Copy reference templates
 mkdir -p ~/.claude/templates
 cp -r .claude/templates/* ~/.claude/templates/
 ----
