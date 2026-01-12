@@ -7,7 +7,7 @@ Solutions to common installation and usage issues.
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="setup.html">Setup</a></li>
-    <li><a href="setup.html#option-c-advanced-users-existing-configuration">Advanced Setup</a></li>
+    <li><a href="setup.html#advanced-setup-for-existing-configurations">Advanced Setup</a></li>
     <li><a href="skills/verify-content.html">Verify Content</a></li>
     <li><a href="skills/create-lab.html">Create Lab</a></li>
     <li><a href="skills/create-demo.html">Create Demo</a></li>
