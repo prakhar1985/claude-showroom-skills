@@ -42,6 +42,7 @@ jobs:
           # Convert root-level pages
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/index.adoc
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/setup.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/advanced-setup.adoc
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/reference.adoc
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/troubleshooting.adoc
 

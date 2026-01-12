@@ -9,7 +9,7 @@ Claude Code skills for creating high-quality Red Hat workshops and demos.
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="setup.html">Setup</a></li>
-    <li><a href="setup.html#advanced-setup-for-existing-configurations">Advanced Setup</a></li>
+    <li><a href="advanced-setup.html">Advanced Setup</a></li>
     <li><a href="skills/verify-content.html">Verify Content</a></li>
     <li><a href="skills/create-lab.html">Create Lab</a></li>
     <li><a href="skills/create-demo.html">Create Demo</a></li>
@@ -29,7 +29,7 @@ Claude Code skills for creating high-quality Red Hat workshops and demos.
 Clone nookbag template and copy skills to `~/.claude/`
 
 |*Advanced Users*
-|link:setup.html#advanced-setup-for-existing-configurations[*Merge with Existing Config* →] +
+|link:advanced-setup.html[*Merge with Existing Config* →] +
 Already have `~/.claude/` with settings.json, other skills, or custom prompts? +
 Learn how to add Showroom skills without overwriting your configuration.
 
