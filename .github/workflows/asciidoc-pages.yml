@@ -33,26 +33,31 @@ jobs:
 
       - name: Build AsciiDoc files
         run: |
-          mkdir -p _site
-          # Copy CSS
+          mkdir -p _site/skills
+
+          # Copy CSS to root and skills directory
           cp docs/asciidoctor.css _site/
-          # Convert index
+          cp docs/asciidoctor.css _site/skills/
+
+          # Convert root-level pages
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/index.adoc
-          # Convert all other adoc files
-          find docs -name "*.adoc" ! -name "index.adoc" -exec sh -c '
-            for file; do
-              dir=$(dirname "$file")
-              mkdir -p "_site/${dir#docs/}"
-              # Calculate relative path to CSS
-              depth=$(echo "${dir#docs/}" | grep -o "/" | wc -l)
-              css_path=$(printf '../%.0s' $(seq 1 $depth))asciidoctor.css
-              asciidoctor -a stylesheet="$css_path" -a linkcss -D "_site/${dir#docs/}" "$file"
-            done
-          ' sh {} +
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/setup.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/reference.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/troubleshooting.adoc
+
+          # Convert skills pages
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/verify-content.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/create-lab.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/create-demo.adoc
+
           # Copy any images or assets
           if [ -d "docs/images" ]; then
             cp -r docs/images _site/
           fi
+
+          # List generated files for debugging
+          echo "Generated files:"
+          find _site -type f
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
