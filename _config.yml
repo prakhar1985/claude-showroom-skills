@@ -2,7 +2,7 @@
 title: "Red Hat Showroom Skills"
 description: "Claude Code skills for creating high-quality Red Hat workshop and demo content"
 baseurl: "/claude-showroom-skills"
-url: "https://psrivast.github.io"
+url: "https://prakhar1985.github.io"
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
