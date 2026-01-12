@@ -127,7 +127,16 @@ If skills don't appear, check the link:troubleshooting.adoc[Troubleshooting] pag
 
 == Advanced Setup (For Existing Configurations)
 
-If you already have skills, prompts, or custom settings in `~/.claude/`, follow these steps to add Showroom skills alongside your existing configuration:
+=== Prerequisites
+
+This section is for you if you already have:
+
+* Existing `~/.claude/` directory with custom configurations
+* Other Claude Code skills installed
+* Custom prompts, hooks, or settings.json
+* Any setup you want to preserve
+
+If you're new to Claude Code with no existing `~/.claude/` directory, use the link:#installation-steps[Standard Installation] instead.
 
 === Step 1: Backup Your Configuration
 
