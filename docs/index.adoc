@@ -2,7 +2,7 @@
 :navtitle: Home
 :description: Claude Code skills for creating high-quality Red Hat workshop and demo content
 
-Professional content creation skills for building high-quality Red Hat workshops and demos.
+Claude Code skills for creating high-quality Red Hat workshops and demos.
 
 ++++
 <div class="nav-menu">
@@ -19,130 +19,65 @@ Professional content creation skills for building high-quality Red Hat workshops
 </div>
 ++++
 
-link:setup.html[Get Started,role=btn] | link:https://github.com/rhpds/showroom-template-nookbag[View on GitHub^]
+== Get Started
 
-== What are Showroom Skills?
+[cols="1,3"]
+|===
+|*New Users*
+|link:setup.html#step-2-copy-skills-to-your-home-directory[*Standard Installation* →] +
+Clone nookbag template and copy skills to `~/.claude/`
 
-Showroom Skills are Claude Code plugins that guide you through creating workshop and demo content that meets Red Hat quality standards. They automate content structure, enforce style guidelines, and ensure accessibility compliance.
+|*Advanced Users*
+|link:setup.html#option-c-advanced-users-existing-configuration[*Merge with Existing Config* →] +
+Already have `~/.claude/` with settings.json, other skills, or custom prompts? +
+Learn how to add Showroom skills without overwriting your configuration.
 
-=== Why use these skills?
-
-✅ *Quality Assurance*: Automatic validation against Red Hat Style Guide and WCAG 2.1 AA standards
-
-✅ *Consistency*: Standardized structure across all workshop and demo content
-
-✅ *Time Savings*: Guided workflows reduce content creation time by 60%
-
-✅ *Best Practices*: Built-in Red Hat expertise and proven patterns
-
-✅ *Accessibility*: Ensure all content meets accessibility requirements
-
-== Quick Start
-
-Install skills to your home directory (`~/.claude/`) for global access across all projects:
-
-[source,bash]
-----
-# Clone nookbag template
-git clone https://github.com/rhpds/showroom-template-nookbag.git
-
-# Copy skills to home directory
-cp -r showroom-template-nookbag/.claude ~/.claude
-
-# Start using
-claude
-/verify-content    # Validate content
-/create-lab        # Create workshop
-/create-demo       # Create demo
-----
-
-link:setup.html[*Full Setup Guide* → Detailed installation, verification, and configuration]
+|*Quick Reference*
+|link:reference.html[*Command Cheatsheet* →] +
+Quick lookup for commands, patterns, and common fixes
+|===
 
 == Available Skills
 
-=== `/verify-content`
+[cols="1,3"]
+|===
+|link:skills/verify-content.html[*`/verify-content`*]
+|Validate workshop/demo content against Red Hat Style Guide, AsciiDoc standards, and WCAG 2.1 AA accessibility requirements.
 
-Validate workshop and demo content against Red Hat standards.
+|link:skills/create-lab.html[*`/create-lab`*]
+|Create workshop modules with sequential questioning, auto-generated structure, and verification checkpoints.
 
-*Checks:*
-
-* Red Hat Style Guide compliance
-* AsciiDoc formatting
-* Accessibility (WCAG 2.1 AA)
-* Technical accuracy
-* Workshop structure
-
-link:skills/verify-content.html[Learn More →]
-
-=== `/create-lab`
-
-Create workshop modules with guided step-by-step workflow.
-
-*Features:*
-
-* Sequential questioning workflow
-* Auto-generated file structure
-* Verification checkpoints
-* Story continuity across modules
-
-link:skills/create-lab.html[Learn More →]
-
-=== `/create-demo`
-
-Create presenter demos with Know/Show methodology.
-
-*Features:*
-
-* Business-focused messaging
-* Presenter guidance
-* ROI and metrics focus
-* Q&A preparation
-
-link:skills/create-demo.html[Learn More →]
-
-== System Requirements
-
-* *Claude Code CLI* or *Cursor IDE* installed
-* *Git* for cloning the template
-* *Basic terminal/command line* knowledge
-* *AsciiDoc* familiarity (helpful but not required)
-
-== What Gets Created?
-
-When you use these skills, you get professional content with:
-
-✅ *Proper file structure* (`index.adoc`, `overview.adoc`, `details.adoc`, modules)
-
-✅ *Red Hat branding* and terminology
-
-✅ *Accessibility features* (alt text, proper headings, WCAG compliance)
-
-✅ *Learning objectives* and verification steps
-
-✅ *Mandatory conclusion* with consolidated references
-
-✅ *Navigation* auto-maintained
+|link:skills/create-demo.html[*`/create-demo`*]
+|Create presenter demos with Know/Show methodology, business impact focus, and competitive positioning.
+|===
 
 == Documentation
 
-*Getting Started*
+=== Getting Started
 
-* link:setup.html[Setup & Installation]
-* link:reference.html[Quick Reference]
-* link:troubleshooting.html[Troubleshooting]
+* link:setup.html[*Setup & Installation*] - Complete installation guide (standard and advanced)
+* link:reference.html[*Quick Reference*] - Command cheatsheet and common patterns
+* link:troubleshooting.html[*Troubleshooting*] - Common issues and solutions
 
-*Skills*
+=== Skill Guides
 
-* link:skills/verify-content.html[Verify Content]
-* link:skills/create-lab.html[Create Lab]
-* link:skills/create-demo.html[Create Demo]
+* link:skills/verify-content.html[*Verify Content*] - Quality validation skill
+* link:skills/create-lab.html[*Create Lab*] - Workshop creation workflow
+* link:skills/create-demo.html[*Create Demo*] - Demo creation workflow
 
-*Resources*
+=== External Resources
 
-* link:https://code.claude.com/docs[Official Claude Code Docs^]
+* link:https://code.claude.com/docs[Official Claude Code Documentation^]
 * link:https://github.com/anthropics/skills[Anthropic Skills Repository^]
-* link:https://github.com/rhpds/showroom-template-nookbag[Nookbag Template^]
-* link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Style Guide^]
+* link:https://github.com/rhpds/showroom-template-nookbag[Nookbag Template (Source Repository)^]
+* link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Corporate Style Guide^]
+
+== Key Features
+
+✅ *Quality Assurance* - Automatic validation against Red Hat standards +
+✅ *Guided Workflows* - Step-by-step content creation (reduces time by 60%) +
+✅ *Accessibility Compliance* - WCAG 2.1 AA requirements built-in +
+✅ *Global Access* - Install once in `~/.claude/`, use everywhere
 
 == Credits
 
@@ -157,7 +92,7 @@ With mentorship from *Tony*.
 
 * *GitHub Issues*: link:https://github.com/psrivast/claude-showroom-skills/issues[Report a problem^]
 * *Red Hat Internal*: #demo-platform Slack channel
-* *Documentation*: Browse the guides in the navigation
+* *Documentation*: Use the navigation menu above
 
 [NOTE]
 ====
