@@ -13,8 +13,8 @@ plugins:
   - jekyll-relative-links
 
 # Theme customization
-color_scheme: red
-logo: "/assets/images/logo.png"
+# color_scheme: nil  # Using default theme (custom Red Hat colors can be added later)
+# logo: "/assets/images/logo.png"  # Logo can be added later
 
 # Navigation
 aux_links:
