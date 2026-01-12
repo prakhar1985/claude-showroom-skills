@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Deploy AsciiDoc to Pages
 
 on:
   push:
@@ -25,15 +25,32 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
-          bundler-cache: true
+
+      - name: Install Asciidoctor
+        run: |
+          gem install asciidoctor
+          gem install rouge
+
+      - name: Build AsciiDoc files
+        run: |
+          mkdir -p _site
+          # Convert index
+          asciidoctor -D _site docs/index.adoc
+          # Convert all other adoc files
+          find docs -name "*.adoc" ! -name "index.adoc" -exec sh -c '
+            for file; do
+              dir=$(dirname "$file")
+              mkdir -p "_site/${dir#docs/}"
+              asciidoctor -D "_site/${dir#docs/}" "$file"
+            done
+          ' sh {} +
+          # Copy any images or assets
+          if [ -d "docs/images" ]; then
+            cp -r docs/images _site/
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      - name: Build with Jekyll
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
