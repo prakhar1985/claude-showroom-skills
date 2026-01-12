@@ -20,17 +20,13 @@ Complete guide to installing and configuring Showroom Skills for Claude Code.
 
 == Prerequisites
 
-Before installing Showroom Skills, ensure you have:
+These skills work with Claude Code CLI or Cursor IDE. If you already have either tool set up on your laptop, you're ready to install Showroom Skills.
 
-* *Claude Code CLI* or *Cursor IDE* installed and configured
+You'll also need:
+
 * *Git* command line tools
 * *Terminal* access (macOS Terminal, Linux shell, or Windows WSL)
 * *Basic command line* familiarity
-
-[NOTE]
-====
-*New to Claude Code?* Install it from link:https://code.claude.com[code.claude.com^] or use Cursor IDE as an alternative.
-====
 
 == Installation Steps
 
