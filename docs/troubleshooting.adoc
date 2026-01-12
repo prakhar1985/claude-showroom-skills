@@ -11,6 +11,7 @@ Solutions to common installation and usage issues.
     <li><a href="skills/verify-content.html">Verify Content</a></li>
     <li><a href="skills/create-lab.html">Create Lab</a></li>
     <li><a href="skills/create-demo.html">Create Demo</a></li>
+    <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
     <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>

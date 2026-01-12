@@ -50,6 +50,7 @@ jobs:
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/verify-content.adoc
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/create-lab.adoc
           asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/create-demo.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site/skills docs/skills/generate-agv-description.adoc
 
           # Copy any images or assets
           if [ -d "docs/images" ]; then

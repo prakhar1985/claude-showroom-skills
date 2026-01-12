@@ -1,0 +1,100 @@
+= Generate AgnosticV Description
+
+Generate AgnosticV catalog description files for RHDP provisioning.
+
+++++
+<div class="nav-menu">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../setup.html">Setup</a></li>
+    <li><a href="../advanced-setup.html">Advanced Setup</a></li>
+    <li><a href="verify-content.html">Verify Content</a></li>
+    <li><a href="create-lab.html">Create Lab</a></li>
+    <li><a href="create-demo.html">Create Demo</a></li>
+    <li><a href="generate-agv-description.html">Generate AgV Description</a></li>
+    <li><a href="../reference.html">Quick Reference</a></li>
+    <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+  </ul>
+</div>
+++++
+
+== What It Does
+
+Automatically generates `description.adoc` files for AgnosticV catalog entries. This skill extracts content from your Showroom workshop or demo and formats it for RHDP provisioning catalogs.
+
+== When to Use
+
+Use this skill when you need to:
+
+* Create catalog entries for RHDP
+* Publish workshops to AgnosticV
+* Generate standardized descriptions for provisioning
+* Extract overview content from existing Showroom guides
+
+== Prerequisites
+
+* Completed workshop or demo in Showroom format
+* AgnosticV repository cloned locally
+* Basic understanding of RHDP catalog structure
+
+== How to Use
+
+[source,bash]
+----
+# Navigate to your Showroom project
+cd ~/showroom-my-workshop
+
+# Generate AgnosticV description
+/generate-agv-description
+----
+
+== What You Get
+
+The skill generates a `description.adoc` file that includes:
+
+* Workshop title and overview
+* Learning objectives
+* Prerequisites
+* Duration estimate
+* Target audience
+* Technical requirements
+
+== Example Output
+
+[source,asciidoc]
+----
+= Workshop Title
+
+Brief overview of what participants will learn.
+
+== Learning Objectives
+
+* Objective 1
+* Objective 2
+* Objective 3
+
+== Prerequisites
+
+* Prerequisite 1
+* Prerequisite 2
+
+== Duration
+
+Approximately X hours
+----
+
+== Next Steps
+
+After generating the description:
+
+1. Review the generated `description.adoc`
+2. Copy to your AgnosticV catalog directory
+3. Commit and push to AgnosticV repository
+4. Verify in RHDP catalog
+
+== Related Resources
+
+* link:../reference.html[Quick Reference]
+* link:create-lab.html[Create Lab]
+* link:create-demo.html[Create Demo]

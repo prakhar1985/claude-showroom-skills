@@ -13,6 +13,7 @@ Guide for advanced users who already have custom Claude Code configurations.
     <li><a href="skills/verify-content.html">Verify Content</a></li>
     <li><a href="skills/create-lab.html">Create Lab</a></li>
     <li><a href="skills/create-demo.html">Create Demo</a></li>
+    <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
     <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
@@ -53,8 +54,8 @@ mkdir -p ~/.claude/skills
 cp -r .claude/skills/create-lab ~/.claude/skills/
 cp -r .claude/skills/create-demo ~/.claude/skills/
 cp -r .claude/skills/verify-content ~/.claude/skills/
-cp -r .claude/skills/blog-generate ~/.claude/skills/
 cp -r .claude/skills/generate-agv-description ~/.claude/skills/
+cp -r .claude/skills/blog-generate ~/.claude/skills/
 ----
 
 == Step 3: Copy Required Prompts

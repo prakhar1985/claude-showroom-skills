@@ -13,6 +13,7 @@ Claude Code skills for creating high-quality Red Hat workshops and demos.
     <li><a href="skills/verify-content.html">Verify Content</a></li>
     <li><a href="skills/create-lab.html">Create Lab</a></li>
     <li><a href="skills/create-demo.html">Create Demo</a></li>
+    <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
     <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
@@ -51,8 +52,8 @@ Quick lookup for commands, patterns, and common fixes
 |link:skills/create-demo.html[*`/create-demo`*]
 |Create presenter demos with Know/Show methodology, business impact focus, and competitive positioning.
 
-|*`/generate-agv-description`*
-|Generate AgnosticV catalog `description.adoc` files for RHDP provisioning. Auto-extracts content from Showroom guides.
+|link:skills/generate-agv-description.html[*`/generate-agv-description`*]
+|Generate AgnosticV catalog description files for RHDP provisioning and catalog entries.
 
 |*`/blog-generate`*
 |Transform workshop/demo content into blog post format for marketing and developer content.
