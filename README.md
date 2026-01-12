@@ -256,7 +256,7 @@ cp -r /path/to/showroom-template-nookbag/.claude/prompts ~/.claude/
 These skills were created and developed by:
 
 - **Prakhar Srivastava** - Manager, Technical Marketing, Red Hat
-- **Nate Stephany** - RHDP Catalog Owner, Red Hat
+- **Nate Stephany** - Senior Principal Technical Marketing Manager, Red Hat
 
 With mentorship from **Tony**.
 

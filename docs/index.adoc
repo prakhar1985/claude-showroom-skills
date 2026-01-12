@@ -149,7 +149,7 @@ When you use these skills, you get professional content with:
 These skills were created and developed by:
 
 * *Prakhar Srivastava* - Manager, Technical Marketing, Red Hat
-* *Nate Stephany* - RHDP Catalog Owner, Red Hat
+* *Nate Stephany* - Senior Principal Technical Marketing Manager, Red Hat
 
 With mentorship from *Tony*.
 
