@@ -1,0 +1,512 @@
+---
+layout: default
+title: Verify Content
+parent: Skills
+nav_order: 1
+description: "Validate workshop and demo content against Red Hat standards"
+---
+
+# Verify Content Quality
+{: .no_toc }
+
+Validate workshop and demo content against Red Hat Corporate Style Guide and Showroom platform requirements.
+{: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## What It Does
+
+The `/verify-content` skill performs comprehensive quality validation on your Showroom workshop or demo content. It checks for:
+
+✅ **Red Hat Style Guide compliance** (em dashes, product names, punctuation)
+✅ **AsciiDoc formatting** (list spacing, image syntax, external links)
+✅ **Accessibility** (WCAG 2.1 AA, alt text, link descriptions)
+✅ **Technical accuracy** (version attributes, references, commands)
+✅ **Workshop structure** (learning objectives, verification steps, conclusion)
+
+---
+
+## When to Use
+
+Run verification in these scenarios:
+
+- **After creating content**: Before submitting for review
+- **Before publishing**: Final quality check
+- **During reviews**: Validate reviewer feedback has been addressed
+- **After updates**: Ensure changes didn't introduce issues
+- **Regular audits**: Periodic quality checks on existing content
+
+{: .tip }
+> Run `/verify-content` early and often. It's faster to fix issues as you create content than to fix them all at the end.
+
+---
+
+## How to Use
+
+### Basic Usage
+
+```bash
+# Navigate to your Showroom project
+cd ~/showroom-my-project
+
+# Start Claude Code
+claude
+
+# Run verification
+/verify-content
+```
+
+That's it! The skill will:
+
+1. **Detect content type** (workshop vs demo)
+2. **Scan all .adoc files** in `content/modules/ROOT/pages/`
+3. **Run validation checks** (11 different prompts)
+4. **Generate report** with detailed findings
+
+---
+
+## What Gets Checked
+
+The skill runs **11 validation checks** across multiple dimensions:
+
+### 1. Red Hat Style Guide Compliance
+
+**What's checked:**
+- Em dash usage (should use commas/periods instead of `—`)
+- Product name abbreviations (Red Hat OpenShift, not OCP)
+- Numbers as numerals (5 steps, not five steps)
+- Heading case (sentence case, not Title Case)
+- Vague language (avoid "robust", "powerful" without context)
+- Unsupported superlatives (no "best" without citations)
+- Inclusive language (allowlist/blocklist, not whitelist/blacklist)
+
+**Example violation:**
+```asciidoc
+OpenShift—Red Hat's platform—is robust and powerful.
+```
+
+**Corrected:**
+```asciidoc
+Red Hat OpenShift is a comprehensive platform for container orchestration.
+```
+
+---
+
+### 2. AsciiDoc Formatting
+
+**What's checked:**
+- **External link carets**: All external links must use `^` to open in new tab
+- **List blank lines**: Blank line before and after every list
+- **Image clickability**: All images must include `link=self,window=blank`
+- **List markers**: Bullets (`*`) for knowledge, numbers (`.`) for steps
+- **Formatting consistency**: Uniform section formatting throughout
+
+**Example violation:**
+```asciidoc
+See link:https://docs.redhat.com[Red Hat Documentation] for details.
+
+**Prerequisites:**
+* OpenShift 4.18
+* Admin access
+Next section begins here...
+```
+
+**Corrected:**
+```asciidoc
+See link:https://docs.redhat.com[Red Hat Documentation^] for details.
+
+**Prerequisites:**
+
+* OpenShift 4.18
+* Admin access
+
+Next section begins here...
+```
+
+---
+
+### 3. Accessibility (WCAG 2.1 AA)
+
+**What's checked:**
+- Image alt text (all images must have descriptive alt text)
+- Link descriptions (no "click here", use descriptive text)
+- Heading hierarchy (logical order: H2 → H3, not H2 → H4)
+- Color contrast (not directly checked, but warnings for reliance on color)
+- Keyboard navigation considerations
+
+**Example violation:**
+```asciidoc
+image::diagram.png[,width=600]
+
+For more info, link:url[click here].
+```
+
+**Corrected:**
+```asciidoc
+image::diagram.png[System architecture showing microservices communication,link=self,window=blank,width=600]
+
+For more information, see link:url[Red Hat OpenShift documentation^].
+```
+
+---
+
+### 4. Technical Accuracy
+
+**What's checked:**
+- Version attributes used (not hardcoded versions)
+- References for technical claims
+- Command accuracy (valid syntax, correct flags)
+- Product capabilities aligned with documentation
+- Configuration samples follow best practices
+
+**Example violation:**
+```asciidoc
+Install OpenShift 4.18 using the following command...
+```
+
+**Corrected:**
+```asciidoc
+Install Red Hat OpenShift {ocp_version} using the following command...
+```
+
+(With `{ocp_version}` defined in `partials/_attributes.adoc`)
+
+---
+
+### 5. Workshop Structure
+
+**What's checked:**
+- Learning objectives present in every module
+- Verification steps included for hands-on activities
+- Mandatory conclusion module exists
+- References consolidated in conclusion (not scattered across modules)
+- Navigation properly updated in `nav.adoc`
+
+**Example violation:**
+```asciidoc
+== Exercise: Deploy Application
+
+. Log into OpenShift
+. Create new project
+. Deploy from Git
+
+== Next Steps
+```
+
+**Corrected:**
+```asciidoc
+== Learning Objectives
+
+After completing this exercise, you will be able to:
+
+* Log into Red Hat OpenShift using the web console
+* Create new projects with proper RBAC
+* Deploy applications from Git repositories
+
+== Exercise: Deploy Application
+
+. Log into OpenShift web console at {web_console_url}
+. Create new project named `my-app`
+. Deploy application from Git repository
+
+=== Verify
+
+After deployment, confirm the application is running:
+
+[source,bash]
+----
+oc get pods -n my-app
+----
+
+Expected output: Pod shows STATUS: Running
+
+== Next Steps
+```
+
+---
+
+## Understanding the Output
+
+Verification produces a **markdown report** with two main sections:
+
+### 1. Detailed Issue Sections (Top)
+
+Each issue gets its own section with full details:
+
+```markdown
+## 7 external links missing ^ caret
+**Priority: Critical**
+**Affected Files:** 01-overview.adoc, 03-module-01.adoc
+
+### Details:
+
+1. **Line 67, 01-overview.adoc**
+   - Current: `link:https://docs.redhat.com[Documentation]`
+   - Required: `link:https://docs.redhat.com[Documentation^]`
+   - Why: External links without ^ replace current tab, losing place in workshop
+   - Fix: Add ^ before closing bracket
+
+2. **Line 89, 01-overview.adoc**
+   - Current: `link:https://kubernetes.io[Kubernetes docs]`
+   - Required: `link:https://kubernetes.io[Kubernetes docs^]`
+   - Why: Learners lose their position when link opens in same tab
+   - Fix: Add ^ before closing bracket
+
+[... continues for all 7 links ...]
+```
+
+### 2. Summary Table (Bottom)
+
+Quick overview of all issues:
+
+```markdown
+## Validation Summary
+
+┌──────────────────────────────────────────┬──────────┬─────────────────────────┐
+│                 Issue                    │ Priority │    Affected Files       │
+├──────────────────────────────────────────┼──────────┼─────────────────────────┤
+│ 7 external links missing ^ caret         │ Critical │ 01-overview.adoc,       │
+│                                          │          │ 03-module-01.adoc       │
+├──────────────────────────────────────────┼──────────┼─────────────────────────┤
+│ 12 lists missing blank lines             │ High     │ 01-overview.adoc        │
+├──────────────────────────────────────────┼──────────┼─────────────────────────┤
+│ 4 images missing alt text                │ High     │ 03-module-01.adoc       │
+├──────────────────────────────────────────┼──────────┼─────────────────────────┤
+│ 2 em dashes found in content             │ Medium   │ 01-overview.adoc        │
+└──────────────────────────────────────────┴──────────┴─────────────────────────┘
+
+**Total Issues:** 25 (7 Critical, 16 High, 2 Medium)
+**Files Affected:** 3 files
+```
+
+### Navigation Workflow
+
+1. **Scroll to bottom** to see the summary table
+2. **Find issue of interest** (e.g., "7 external links missing ^ caret")
+3. **Copy exact issue text** from table
+4. **Scroll to top and search** (Cmd+F / Ctrl+F) for exact text
+5. **Find detailed section** with all fixes and examples
+
+{: .tip }
+> The issue description in the table EXACTLY matches the section header. This makes navigation fast and accurate.
+
+---
+
+## Common Issues and Fixes
+
+### Issue: External Links Missing Caret
+
+**Problem:** External links open in same tab, losing place in workshop
+
+**Detection:**
+```
+Pattern: link:https?://[^\^]+\[[^\]]+\]
+Missing ^ before closing bracket
+```
+
+**Fix:**
+```asciidoc
+❌ link:https://docs.redhat.com[Documentation]
+✅ link:https://docs.redhat.com[Documentation^]
+```
+
+---
+
+### Issue: Lists Without Blank Lines
+
+**Problem:** Text runs together when rendered, looks unprofessional
+
+**Detection:**
+```
+Bold text or headings immediately followed by list markers
+List items immediately followed by paragraphs
+```
+
+**Fix:**
+```asciidoc
+❌ **Prerequisites:**
+   * OpenShift installed
+   * Admin access
+   Next section...
+
+✅ **Prerequisites:**
+
+   * OpenShift installed
+   * Admin access
+
+   Next section...
+```
+
+---
+
+### Issue: Em Dashes in Content
+
+**Problem:** Violates Red Hat Style Guide
+
+**Detection:**
+```
+Character: — (em dash)
+Should use: commas, periods, or en dashes (–)
+```
+
+**Fix:**
+```asciidoc
+❌ OpenShift—Red Hat's platform—simplifies deployments
+✅ OpenShift, Red Hat's platform, simplifies deployments
+
+❌ The process is simple—just follow these steps
+✅ The process is simple. Just follow these steps.
+```
+
+---
+
+### Issue: Images Missing Alt Text
+
+**Problem:** Violates WCAG 2.1 AA accessibility standards
+
+**Detection:**
+```
+Pattern: image::file.png[,width=600]
+Missing descriptive text in brackets
+```
+
+**Fix:**
+```asciidoc
+❌ image::diagram.png[,width=600]
+✅ image::diagram.png[System architecture diagram,link=self,window=blank,width=600]
+```
+
+---
+
+### Issue: Product Name Abbreviations
+
+**Problem:** Violates Red Hat Style Guide
+
+**Detection:**
+```
+Abbreviations: OCP, RHEL, ODF, ACM, ACS
+Should use: Full product names
+```
+
+**Fix:**
+```asciidoc
+❌ Deploy your app to OCP using the CLI
+✅ Deploy your application to Red Hat OpenShift using the command line
+```
+
+---
+
+## Next Steps
+
+After running verification:
+
+1. **Review the report** (start with Critical and High priority issues)
+2. **Fix issues systematically** (use provided before/after examples)
+3. **Re-run verification** to confirm fixes
+4. **Address remaining warnings** (Medium and Low priority)
+5. **Final check** before publishing
+
+---
+
+## Example Session
+
+Here's a typical verification workflow:
+
+```bash
+$ cd ~/showroom-openshift-workshop
+$ claude
+
+Claude Code> /verify-content
+
+Analyzing content type... Detected: Workshop content
+Scanning files in content/modules/ROOT/pages/...
+  ✓ 00-index.adoc
+  ✓ 01-overview.adoc
+  ✓ 02-details.adoc
+  ✓ 03-module-01-setup.adoc
+  ✓ 04-module-02-deploy.adoc
+  ✓ 05-conclusion.adoc
+
+Running validation checks:
+  ✓ Red Hat Style Guide compliance
+  ✓ AsciiDoc formatting
+  ✓ Accessibility (WCAG 2.1 AA)
+  ✓ Technical accuracy
+  ✓ Workshop structure
+
+Generating report...
+
+[Report displays with detailed issues and summary table]
+
+Total Issues Found: 18 (3 Critical, 10 High, 5 Medium)
+Files Affected: 4 files
+
+Next steps:
+1. Review Critical issues first
+2. Apply suggested fixes
+3. Re-run /verify-content
+```
+
+---
+
+## Advanced Usage
+
+### Verify Specific Files
+
+{: .note }
+> Currently, `/verify-content` scans all .adoc files in `content/modules/ROOT/pages/`. File-specific verification is not yet supported but is planned for a future release.
+
+### Custom Validation Rules
+
+{: .note }
+> Custom validation rules are defined in `~/.claude/prompts/`. Advanced users can modify these prompts, but be aware that updates to the nookbag template will overwrite custom changes.
+
+---
+
+## Troubleshooting
+
+### Verification Takes Too Long
+
+**Problem:** Verification runs for more than 2-3 minutes
+
+**Possible causes:**
+- Too many files (>20 modules)
+- Large files (>500 lines each)
+- Network latency to Claude API
+
+**Solutions:**
+- Break large modules into smaller files
+- Verify subsections separately (copy to test directory)
+- Check network connection
+
+---
+
+### Verification Errors
+
+**Problem:** Skill reports errors instead of validation results
+
+**Possible causes:**
+- Missing `.claude/prompts/` directory
+- Incomplete prompt files (should be 11 total)
+- File permission issues
+
+**Solutions:**
+1. Re-copy prompts: `cp -r .claude/prompts ~/.claude/`
+2. Check file permissions: `ls -la ~/.claude/prompts/`
+3. See [Troubleshooting Guide](../troubleshooting) for more help
+
+---
+
+## Related Resources
+
+- [Setup & Installation](../setup) - Install verification prompts
+- [Create Lab](create-lab) - Create content to verify
+- [Create Demo](create-demo) - Create demos to verify
+- [Quick Reference](../reference) - Validation check cheatsheet
+- [Red Hat Style Guide](https://redhat-documentation.github.io/supplementary-style-guide/) - Official style rules

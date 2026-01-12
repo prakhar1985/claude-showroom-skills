@@ -1,0 +1,687 @@
+---
+layout: default
+title: Create Lab
+parent: Skills
+nav_order: 2
+description: "Create workshop modules with guided workflow"
+---
+
+# Create Workshop Labs
+{: .no_toc }
+
+Guided workflow for creating hands-on workshop modules that meet Red Hat quality standards.
+{: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## What It Does
+
+The `/create-lab` skill guides you through creating workshop content with:
+
+✅ **Sequential questioning** (one question at a time, wait for answer)
+✅ **Automatic file generation** (index, overview, details, modules)
+✅ **Story continuity** across modules
+✅ **Verification checkpoints** in every module
+✅ **Red Hat standards** enforcement
+✅ **Mandatory conclusion** with consolidated references
+
+---
+
+## When to Use
+
+Create workshop labs when you need:
+
+- **Hands-on learning content** for students/learners
+- **Progressive skill building** (beginner → advanced)
+- **Step-by-step instructions** with verification
+- **Technical training modules** (30-45 minutes each)
+- **Lab environments** with guided activities
+
+{: .note }
+> For presenter-led demonstrations, use [`/create-demo`](create-demo) instead. Workshops are learner-focused; demos are presenter-focused.
+
+---
+
+## Before You Start
+
+Have these materials ready:
+
+- **Reference documentation** (official docs, URLs, existing content)
+- **Learning objectives** (what should learners achieve?)
+- **Target audience** defined (skill level, background)
+- **Lab environment** details (if using AgnosticD/RHDP)
+- **Technical scope** (what products/features to cover)
+
+{: .tip }
+> The skill works best when you have clear learning goals. Spend 10 minutes outlining objectives before starting.
+
+---
+
+## How to Use
+
+### Start New Workshop Series
+
+```bash
+# Navigate to your Showroom project
+cd ~/showroom-my-workshop
+
+# Start Claude Code
+claude
+
+# Create first module
+/create-lab --new
+```
+
+### Continue Existing Workshop
+
+```bash
+# In same project directory
+claude
+
+# Add another module
+/create-lab --continue
+```
+
+---
+
+## The Workflow
+
+The skill uses a **12-step sequential workflow**. Each step asks questions and waits for your answers.
+
+### Step 0: Parse Command Arguments
+
+**What happens:**
+- Detects `--new` or `--continue` flag
+- If no flag, asks whether this is a new workshop or continuation
+
+**Your input:**
+- Nothing (if you used flags)
+- OR answer: "This is a new workshop" or "Continue existing workshop"
+
+---
+
+### Step 1: Determine Workshop Status
+
+**What happens:**
+- For new workshops: Proceeds to Step 2
+- For continuations: Detects existing modules, skips to Step 3
+
+**Automatic detection:**
+```
+Scanning content/modules/ROOT/pages/...
+Found existing modules:
+  ✓ 00-index.adoc
+  ✓ 01-overview.adoc
+  ✓ 02-details.adoc
+  ✓ 03-module-01-setup.adoc
+
+Detected: Continuation (will create module 04)
+```
+
+---
+
+### Step 2: Plan Overall Workshop Story (New Only)
+
+**What's asked:**
+1. **Workshop title**: What is the main topic?
+2. **Company scenario**: What fictional company will we use?
+3. **Business challenge**: What problem does the company face?
+4. **Learning arc**: How will skills progress across modules?
+5. **Target duration**: How many modules (and total time)?
+
+**Example answers:**
+```
+Title: "Deploying Applications on Red Hat OpenShift"
+Company: "ACME Retail"
+Challenge: "ACME needs to modernize legacy apps for cloud"
+Learning arc: "Module 1: Basics → Module 2: Advanced → Module 3: Production"
+Duration: "3 modules, ~2 hours total"
+```
+
+{: .note }
+> The skill remembers this story for all subsequent modules. You don't need to repeat it.
+
+---
+
+### Step 2.5: AgnosticV Catalog (Optional)
+
+**What's asked:**
+- "Are you creating this for Red Hat Demo Platform (RHDP)?"
+
+**If yes:**
+- Skill helps generate `catalog.yaml` for AgnosticV
+- Extracts variables from catalog for use in content
+- Generates UUIDs for catalog entries
+
+**If no:**
+- Skips catalog generation
+- Uses placeholder attributes instead
+
+{: .tip }
+> Most users select "No" unless deploying to RHDP. You can always add catalog later.
+
+---
+
+### Step 3: Gather Module-Specific Details
+
+**What's asked:**
+1. **Module title**: What will this module teach?
+2. **Learning objectives**: List 3-5 specific, measurable outcomes
+3. **Prerequisites**: What should learners know beforehand?
+4. **Estimated time**: How long will this module take?
+5. **Key concepts**: What technical concepts are introduced?
+
+**Example answers:**
+```
+Module title: "Deploying Your First Application"
+Learning objectives:
+  - Log into Red Hat OpenShift web console
+  - Create new projects with proper naming
+  - Deploy applications from Git repositories
+  - Verify deployment status using CLI and UI
+
+Prerequisites:
+  - Basic Linux command line knowledge
+  - Git fundamentals
+  - Understanding of containers (helpful but not required)
+
+Time: 30-45 minutes
+Key concepts: Projects, Pods, Deployments, Services, Routes
+```
+
+---
+
+### Steps 4-7: Content Enhancement
+
+**Step 4: Dynamic Variables**
+- "What variables should be extracted?" (e.g., `{web_console_url}`, `{username}`)
+- Variables go in `partials/_attributes.adoc`
+
+**Step 5: Diagrams**
+- "Will this module include diagrams?" (Yes/No)
+- If yes: Describes where images should be placed
+
+**Step 6: Troubleshooting**
+- "Should we include troubleshooting section?" (Optional for basic modules)
+- If yes: Asks for common issues to document
+
+**Step 7: Verification Steps**
+- "What should learners verify?" (Mandatory)
+- Ensures hands-on checkpoints exist
+
+---
+
+### Step 8: Generate Files
+
+**For first module** (`--new`):
+Creates 4 files:
+
+```
+00-index.adoc           # Landing page with workshop overview
+01-overview.adoc        # Company scenario and learning objectives
+02-details.adoc         # Technical requirements and prerequisites
+03-module-01-*.adoc     # First hands-on module
+```
+
+**For continuation** (`--continue`):
+Creates 1 file:
+
+```
+04-module-02-*.adoc     # Next module in sequence
+```
+
+{: .warning }
+> Files are written directly to `content/modules/ROOT/pages/`. Back up existing content before running the skill!
+
+---
+
+### Step 10: Update Navigation
+
+**What happens:**
+- Automatically updates `content/modules/ROOT/nav.adoc`
+- Adds new module to navigation menu
+- Maintains proper ordering
+
+**Example nav.adoc update:**
+```asciidoc
+* xref:00-index.adoc[Workshop Home]
+* xref:01-overview.adoc[Overview]
+* xref:02-details.adoc[Technical Details]
+* xref:03-module-01-setup.adoc[Module 1: Setup]
+* xref:04-module-02-deploy.adoc[Module 2: Deploy]  ← NEW
+```
+
+---
+
+### Step 12: Generate Conclusion Module
+
+**What's asked** (when you're ready to finish):
+- "Is this the final module?" (Yes/No)
+
+**If yes:**
+- Generates conclusion module (`0X-conclusion.adoc`)
+- Consolidates ALL references from all modules
+- Includes key takeaways
+- Provides next steps for learners
+- Links to Red Hat training/certification
+
+{: .note }
+> Conclusion modules are **mandatory** in Red Hat workshops. They wrap up the learning journey and consolidate references.
+
+---
+
+## What You Get
+
+### First Module Output (4 Files)
+
+#### `00-index.adoc` (Landing Page)
+```asciidoc
+= Deploying Applications on Red Hat OpenShift
+
+Welcome to this hands-on workshop on deploying applications to Red Hat OpenShift.
+
+== Workshop Overview
+
+Learn how to deploy, manage, and scale applications on Red Hat OpenShift.
+
+== What You'll Learn
+
+* Deploy applications from Git repositories
+* Manage application lifecycles
+* Scale applications for production
+
+== Modules
+
+. xref:01-overview.adoc[Overview]
+. xref:02-details.adoc[Technical Details]
+. xref:03-module-01-setup.adoc[Module 1: Setup]
+...
+```
+
+#### `01-overview.adoc` (Business Scenario)
+```asciidoc
+= Workshop Overview
+
+== Company Scenario: ACME Retail
+
+ACME Retail faces challenges modernizing legacy applications...
+
+== Learning Objectives
+
+By the end of this workshop, you will be able to:
+
+* Deploy applications to Red Hat OpenShift
+* Configure application settings
+* Troubleshoot common issues
+
+== Prerequisites
+
+* Basic Linux command line knowledge
+* Git fundamentals
+```
+
+#### `02-details.adoc` (Technical Requirements)
+```asciidoc
+= Technical Details
+
+== Environment Information
+
+Your lab environment includes:
+
+* Red Hat OpenShift {ocp_version}
+* Web console: {web_console_url}
+* Username: {username}
+
+== Lab Duration
+
+Total time: ~2 hours (3 modules × 30-45 minutes each)
+```
+
+#### `03-module-01-*.adoc` (First Module)
+```asciidoc
+= Module 1: Deploying Your First Application
+
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Log into Red Hat OpenShift web console
+* Create new projects
+* Deploy applications from Git
+
+== Exercise: Deploy Application
+
+. Log into OpenShift web console at {web_console_url}
+. Create new project named `my-first-app`
+. Deploy from Git repository
+
+=== Verify
+
+Confirm deployment succeeded:
+
+[source,bash]
+----
+oc get pods -n my-first-app
+----
+
+Expected: Pod shows STATUS: Running
+```
+
+---
+
+## Key Features
+
+### 1. Sequential Questioning
+
+{: .tip }
+> The skill asks **one question (or related group) at a time** and **waits for your answer**. This prevents overwhelming you with 20 questions at once.
+
+**Example interaction:**
+```
+Skill: "What is the title of this workshop module?"
+You: "Deploying Your First Application"
+
+Skill: "What are the learning objectives? (List 3-5)"
+You: "1. Log into OpenShift console
+      2. Create new projects
+      3. Deploy from Git
+      4. Verify deployment status"
+
+Skill: "What prerequisites should learners have?"
+You: "Basic Linux CLI, Git fundamentals, container concepts"
+```
+
+---
+
+### 2. Story Continuity
+
+**First module** (using `--new`):
+- You define company scenario
+- Skill remembers: "ACME Retail needs to modernize apps"
+
+**Second module** (using `--continue`):
+- Skill auto-detects: "Continuing ACME Retail story"
+- You don't re-explain the scenario
+- Seamless narrative across modules
+
+---
+
+### 3. Automatic Verification Checkpoints
+
+Every module **must include** verification steps. The skill ensures:
+
+✅ Learners can check their progress
+✅ Success criteria are clear
+✅ Commands show expected output
+✅ Troubleshooting hints provided (optional)
+
+**Example verification:**
+```asciidoc
+=== Verify Your Deployment
+
+Check that your application is running:
+
+[source,bash]
+----
+oc get pods -n my-app
+----
+
+**Expected output:**
+NAME                     READY   STATUS    RESTARTS   AGE
+my-app-1-xxxxx           1/1     Running   0          2m
+
+✅ **Success**: Pod shows STATUS: Running
+❌ **Issue**: If pod shows CrashLoopBackOff, check logs:
+   oc logs <pod-name> -n my-app
+```
+
+---
+
+### 4. AgnosticV Integration (Optional)
+
+For RHDP developers deploying to Red Hat Demo Platform:
+
+**What it does:**
+- Generates `catalog.yaml` for AgnosticV repository
+- Extracts user_data variables (URLs, credentials, endpoints)
+- Creates UUIDs for catalog entries
+- Provides git workflow guidance
+
+**Example variable extraction:**
+```yaml
+# From AgnosticV user_data:
+user_data:
+  web_console_url: "https://console-openshift-console.apps..."
+  username: "user1"
+  password: "xxxxx"
+
+# Becomes attributes in content:
+{web_console_url}
+{username}
+{password}
+```
+
+{: .note }
+> AgnosticV integration is **optional**. Most workshop creators skip this unless deploying to RHDP.
+
+---
+
+## Best Practices
+
+### 1. Use Version Attributes
+
+❌ **Don't hardcode versions:**
+```asciidoc
+Install OpenShift 4.18 using...
+```
+
+✅ **Use attributes:**
+```asciidoc
+Install Red Hat OpenShift {ocp_version} using...
+```
+
+**Why:** Hardcoded versions break when products update. Attributes make content future-proof.
+
+---
+
+### 2. Include Verification in Every Module
+
+❌ **Missing verification:**
+```asciidoc
+== Exercise: Deploy Application
+
+. Create project
+. Deploy app
+. Done!
+```
+
+✅ **Include verification:**
+```asciidoc
+== Exercise: Deploy Application
+
+. Create project
+. Deploy app
+
+=== Verify
+
+Check deployment status:
+
+oc get pods
+Expected: Pod shows Running status
+```
+
+**Why:** Learners need checkpoints to confirm understanding before proceeding.
+
+---
+
+### 3. Keep Modules Focused (30-45 min)
+
+❌ **Too long (90 min module):**
+- Covers 10 different topics
+- Learners get fatigued
+- Hard to debug issues
+
+✅ **Right size (30-45 min module):**
+- 1-2 related topics
+- Clear beginning and end
+- Manageable troubleshooting
+
+**Why:** Shorter modules improve retention and reduce frustration.
+
+---
+
+### 4. Add References for Claims
+
+❌ **Unsupported claim:**
+```asciidoc
+OpenShift is the most popular container platform.
+```
+
+✅ **With reference:**
+```asciidoc
+According to link:https://www.redhat.com/...[Red Hat research^],
+OpenShift is used by 85% of Fortune 500 companies for container orchestration.
+```
+
+**Why:** References build credibility and allow learners to verify claims.
+
+---
+
+## Example Session
+
+Here's a typical create-lab workflow:
+
+```bash
+$ cd ~/showroom-openshift-workshop
+$ claude
+
+Claude Code> /create-lab --new
+
+Welcome to Workshop Lab Creator!
+
+I'll guide you through creating a new workshop series.
+
+Step 1: Determine Workshop Status
+This is a NEW workshop (creating from scratch).
+
+Step 2: Plan Overall Workshop Story
+
+Q: What is the title of this workshop?
+A: Deploying Cloud-Native Applications on Red Hat OpenShift
+
+Q: What fictional company will we use for the scenario?
+A: ACME Retail
+
+Q: What business challenge does ACME face?
+A: ACME needs to modernize legacy monolithic applications to
+   support rapid feature releases and handle seasonal traffic spikes.
+
+Q: How will skills progress across modules?
+A: Module 1: Deploy first app (basics)
+   Module 2: Configure for production (scaling, health checks)
+   Module 3: Implement CI/CD (automation)
+
+Q: How many modules total?
+A: 3 modules
+
+Excellent! Workshop story established.
+
+Step 3: Gather Module-Specific Details
+
+Q: What is the title of this module?
+A: Deploying Your First Application
+
+Q: What are the learning objectives? (3-5 specific outcomes)
+A: 1. Log into Red Hat OpenShift web console
+   2. Create new projects with proper RBAC
+   3. Deploy applications from Git repositories
+   4. Verify deployment using CLI and web console
+
+Q: What prerequisites should learners have?
+A: - Basic Linux command line knowledge
+   - Git fundamentals
+   - Understanding of containers (helpful but not required)
+
+Q: Estimated time for this module?
+A: 30-45 minutes
+
+Q: What key technical concepts are introduced?
+A: Projects, Pods, Deployments, Services, Routes
+
+[Steps 4-7 continue with variables, diagrams, verification...]
+
+Step 8: Generating Files
+
+Creating workshop files:
+  ✓ 00-index.adoc
+  ✓ 01-overview.adoc
+  ✓ 02-details.adoc
+  ✓ 03-module-01-deploying-first-app.adoc
+
+Step 10: Updating Navigation
+  ✓ nav.adoc updated
+
+Workshop module created successfully!
+
+Next steps:
+1. Review generated files in content/modules/ROOT/pages/
+2. Run /verify-content to check quality
+3. When ready for Module 2, run /create-lab --continue
+```
+
+---
+
+## Troubleshooting
+
+### Skill Doesn't Detect Existing Modules
+
+**Problem:** Running `/create-lab --continue` but skill thinks it's new
+
+**Cause:** Missing or incorrectly named files
+
+**Solution:**
+1. Check file naming: Must be `0X-module-YY-*.adoc` pattern
+2. Ensure files are in `content/modules/ROOT/pages/`
+3. Restart Claude Code session
+
+---
+
+### Files Overwritten
+
+**Problem:** Running skill overwrote my custom edits
+
+**Cause:** Skill regenerated existing files
+
+**Solution:**
+- Back up content before running skills
+- Use version control (git) to track changes
+- If overwritten, recover from git: `git checkout HEAD -- filename.adoc`
+
+---
+
+### Variable Extraction Fails
+
+**Problem:** AgnosticV variables not detected
+
+**Cause:** Catalog format doesn't match expected structure
+
+**Solution:**
+- Manually define variables in `partials/_attributes.adoc`
+- Skip AgnosticV integration (answer "No" to RHDP question)
+- Use placeholder attributes instead
+
+---
+
+## Related Resources
+
+- [Verify Content](verify-content) - Validate created labs
+- [Create Demo](create-demo) - Create presenter demos instead
+- [Setup Guide](../setup) - Install create-lab skill
+- [Quick Reference](../reference) - Command cheatsheet
+- [Red Hat Style Guide](https://redhat-documentation.github.io/supplementary-style-guide/) - Writing standards
