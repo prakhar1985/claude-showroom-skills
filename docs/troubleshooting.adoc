@@ -434,131 +434,11 @@ user_data:
 
 == Content Quality Issues
 
-=== External Links Not Opening in New Tab
+For common AsciiDoc formatting fixes (external links, lists, images, em dashes, product names), see:
 
-*Problem:* Verification reports "external links missing ^ caret"
+* link:reference.html#common-validation-fixes[Quick Reference → Common Validation Fixes]
 
-*Example issue:*
-
-[source,asciidoc]
-----
-See link:https://docs.redhat.com[Red Hat Documentation] for details.
-----
-
-*Fix:*
-
-[source,asciidoc]
-----
-See link:https://docs.redhat.com[Red Hat Documentation^] for details.
-                                                        ↑ Add caret here
-----
-
-*Why:* External links without `^` replace current tab, causing learners to lose their place.
-
-=== Lists Render Without Spacing
-
-*Problem:* Lists appear squished together when rendered
-
-*Example issue:*
-
-[source,asciidoc]
-----
-**Prerequisites:**
-* OpenShift 4.18
-* Admin access
-Next section starts here...
-----
-
-*Fix:*
-
-[source,asciidoc]
-----
-**Prerequisites:**
-
-* OpenShift 4.18
-* Admin access
-
-Next section starts here...
-----
-
-*Why:* AsciiDoc requires blank lines before and after lists for proper spacing.
-
-=== Images Not Clickable
-
-*Problem:* Verification reports "images missing link=self,window=blank"
-
-*Example issue:*
-
-[source,asciidoc]
-----
-image::diagram.png[System architecture,width=600]
-----
-
-*Fix:*
-
-[source,asciidoc]
-----
-image::diagram.png[System architecture,link=self,window=blank,width=600]
-----
-
-*Why:* Clickable images allow learners to view full-size versions in new tabs.
-
-=== Em Dashes in Content
-
-*Problem:* Verification reports "em dashes found in content"
-
-*Example issue:*
-
-[source,asciidoc]
-----
-OpenShift—Red Hat's platform—simplifies deployments.
-        ↑              ↑ Em dashes (—)
-----
-
-*Fix Option 1: Use commas*
-
-[source,asciidoc]
-----
-OpenShift, Red Hat's platform, simplifies deployments.
-----
-
-*Fix Option 2: Use periods*
-
-[source,asciidoc]
-----
-OpenShift simplifies deployments. Red Hat's platform provides...
-----
-
-*Why:* Red Hat Style Guide prohibits em dashes. Use commas or periods instead.
-
-=== Product Name Abbreviations
-
-*Problem:* Verification reports "product name abbreviations found"
-
-*Example issue:*
-
-[source,asciidoc]
-----
-Deploy your app to OCP using the CLI.
-                   ↑ Abbreviation
-----
-
-*Fix:*
-
-[source,asciidoc]
-----
-Deploy your application to Red Hat OpenShift using the command line.
-----
-
-*Common abbreviations to avoid:*
-
-* OCP → Red Hat OpenShift
-* RHEL → Red Hat Enterprise Linux
-* ODF → Red Hat OpenShift Data Foundation
-* ACM → Red Hat Advanced Cluster Management
-* ACS → Red Hat Advanced Cluster Security
-
-*Why:* Red Hat Style Guide requires full product names on first use and in headings.
+This section includes before/after examples for all common issues reported by `/verify-content`.
 
 == Cursor IDE Issues
 
@@ -575,26 +455,32 @@ Deploy your application to Red Hat OpenShift using the command line.
 
 *Possible causes:*
 
-==== 1. Skills not in project .claude/ directory
+==== 1. Skills not in home directory
 
 *Check:*
 
 [source,bash]
 ----
-ls -la .claude/skills/
+ls -la ~/.claude/skills/
 ----
 
 *Fix:*
 
 [source,bash]
 ----
-# Copy skills to project directory
-cp -r ~/.claude/skills ./.claude/
+# Ensure skills are in home directory (global)
+cp -r /path/to/showroom-template-nookbag/.claude ~/.claude
 ----
 
-[NOTE]
+[IMPORTANT]
 ====
-Cursor reads skills from both `~/.claude/` (global) and `.claude/` (project-specific).
+For Showroom skills, *always use `~/.claude/` (home directory)*, not project-specific `.claude/`.
+
+Cursor reads from both locations, but home directory ensures:
+
+* Skills work across all projects
+* No need to copy skills to every project
+* Consistent behavior with Claude Code CLI
 ====
 
 ==== 2. Cursor skills feature not enabled

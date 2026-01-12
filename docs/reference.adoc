@@ -19,23 +19,9 @@ Cheatsheet for common commands, patterns, and standards.
 
 == Installation
 
-=== One-Time Setup
+See link:setup.html[Setup & Installation Guide] for complete installation instructions.
 
-[source,bash]
-----
-# Clone nookbag template
-git clone https://github.com/rhpds/showroom-template-nookbag.git
-cd showroom-template-nookbag
-
-# Copy to home directory
-cp -r .claude ~/.claude
-
-# Start Claude Code
-claude
-
-# Verify installation
-/help
-----
+TIP: Skills must be installed to `~/.claude/` (home directory) for global access across all projects.
 
 == Available Skills
 
@@ -137,27 +123,7 @@ claude
 
 === Global Skills Directory
 
-----
-~/.claude/
-├── skills/                    # Skill definitions
-│   ├── create-lab/
-│   │   └── SKILL.md
-│   ├── create-demo/
-│   │   └── SKILL.md
-│   ├── verify-content/
-│   │   └── SKILL.md
-│   └── blog-generate/
-│       └── SKILL.md
-│
-├── prompts/                   # Verification prompts (11 files)
-│   ├── enhanced_verification_workshop.txt
-│   ├── enhanced_verification_demo.txt
-│   ├── redhat_style_guide_validation.txt
-│   └── ... (8 more files)
-│
-└── docs/                      # Shared rules
-    └── SKILL-COMMON-RULES.md
-----
+All skills installed in `~/.claude/` - see link:setup.html#directory-structure-explained[Setup Guide] for full directory tree.
 
 === Project Content Directory
 
@@ -678,23 +644,9 @@ ls content/modules/ROOT/pages/
 # Fix: Rename files to match pattern
 ----
 
-== Update Skills
+== Updating Skills
 
-[source,bash]
-----
-# Navigate to nookbag template
-cd /path/to/showroom-template-nookbag
-
-# Pull latest changes
-git pull origin main
-
-# Re-copy to home directory
-cp -r .claude ~/.claude
-
-# Restart Claude Code
-exit
-claude
-----
+See link:setup.html#updating-skills[Setup Guide - Updating Skills] for instructions.
 
 == Related Resources
 

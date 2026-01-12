@@ -39,37 +39,24 @@ Showroom Skills are Claude Code plugins that guide you through creating workshop
 
 == Quick Start
 
-Get up and running in 3 simple steps:
-
-=== 1. Clone the Template
+Install skills to your home directory (`~/.claude/`) for global access across all projects:
 
 [source,bash]
 ----
+# Clone nookbag template
 git clone https://github.com/rhpds/showroom-template-nookbag.git
-cd showroom-template-nookbag
-----
 
-=== 2. Copy Skills to Your Home Directory
+# Copy skills to home directory
+cp -r showroom-template-nookbag/.claude ~/.claude
 
-[source,bash]
-----
-cp -r .claude ~/.claude
-----
-
-=== 3. Start Using Skills
-
-[source,bash]
-----
-# Start Claude Code
+# Start using
 claude
-
-# Use the skills
-/verify-content    # Validate content quality
-/create-lab        # Create workshop module
-/create-demo       # Create demo module
+/verify-content    # Validate content
+/create-lab        # Create workshop
+/create-demo       # Create demo
 ----
 
-link:setup.html[Detailed Setup Instructions]
+link:setup.html[*Full Setup Guide* → Detailed installation, verification, and configuration]
 
 == Available Skills
 
