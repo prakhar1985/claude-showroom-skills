@@ -49,6 +49,10 @@ See link:setup.html#option-c-advanced-users-existing-configuration[Setup Guide -
 |Create demo module
 |Presenter-led demonstrations
 
+|`/generate-agv-description`
+|Generate AgnosticV catalog description
+|RHDP provisioning, catalog entries
+
 |`/blog-generate`
 |Transform to blog post
 |Marketing content, developer blogs

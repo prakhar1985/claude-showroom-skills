@@ -50,6 +50,12 @@ Quick lookup for commands, patterns, and common fixes
 
 |link:skills/create-demo.html[*`/create-demo`*]
 |Create presenter demos with Know/Show methodology, business impact focus, and competitive positioning.
+
+|*`/generate-agv-description`*
+|Generate AgnosticV catalog `description.adoc` files for RHDP provisioning. Auto-extracts content from Showroom guides.
+
+|*`/blog-generate`*
+|Transform workshop/demo content into blog post format for marketing and developer content.
 |===
 
 == Documentation

@@ -46,7 +46,8 @@ claude
 | `/verify-content` | Validate workshop/demo content against Red Hat standards | [Docs](https://psrivast.github.io/claude-showroom-skills/skills/verify-content) |
 | `/create-lab` | Create workshop modules with guided workflow | [Docs](https://psrivast.github.io/claude-showroom-skills/skills/create-lab) |
 | `/create-demo` | Create presenter demos with Know/Show structure | [Docs](https://psrivast.github.io/claude-showroom-skills/skills/create-demo) |
-| `/blog-generate` | Transform workshop/demo content to blog posts | [Docs](https://psrivast.github.io/claude-showroom-skills/skills/blog-generate) |
+| `/generate-agv-description` | Generate AgnosticV catalog description for RHDP | See nookbag template |
+| `/blog-generate` | Transform workshop/demo content to blog posts | See nookbag template |
 
 ---
 
