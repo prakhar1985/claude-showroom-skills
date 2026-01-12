@@ -225,6 +225,60 @@ ping github.com
 * Check corporate firewall/proxy settings
 * Try from different network
 
+---
+
+=== Conflicts with Existing ~/.claude/ Configuration
+
+*Problem:* Already have `~/.claude/` with custom settings, other skills, or configurations
+
+*Symptoms:*
+
+* Don't want to overwrite existing `settings.json`
+* Have other skills installed that might conflict
+* Have custom prompts or hooks
+
+*Solution:* Use selective installation (Option C from setup guide)
+
+[source,bash]
+----
+# 1. Backup existing configuration first!
+cp -r ~/.claude ~/.claude.backup
+
+# 2. Copy only Showroom skills (one by one to avoid overwriting)
+mkdir -p ~/.claude/skills
+cp -r .claude/skills/create-lab ~/.claude/skills/
+cp -r .claude/skills/create-demo ~/.claude/skills/
+cp -r .claude/skills/verify-content ~/.claude/skills/
+cp -r .claude/skills/blog-generate ~/.claude/skills/
+
+# 3. Copy prompts (required, but won't conflict with custom prompts)
+mkdir -p ~/.claude/prompts
+cp .claude/prompts/* ~/.claude/prompts/
+
+# 4. Verify both old and new skills work
+claude
+/help  # Should list all skills (existing + Showroom)
+----
+
+[IMPORTANT]
+====
+*Configuration coexistence:*
+
+* *settings.json*: Showroom skills don't require special settings - your existing settings.json is fine
+* *Other skills*: Multiple skills coexist peacefully - no conflicts
+* *Prompts*: Showroom prompts are uniquely named (won't overwrite custom prompts)
+* *Hooks*: If you have custom hooks, review `.claude/hooks/` before copying
+
+If something breaks after installation:
+
+[source,bash]
+----
+# Restore your backup
+rm -rf ~/.claude
+mv ~/.claude.backup ~/.claude
+----
+====
+
 == Skill Usage Issues
 
 === /verify-content Takes Too Long

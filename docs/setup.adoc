@@ -93,6 +93,49 @@ cp -r .claude/docs ~/.claude/
 *Important:* The `verify-content` skill requires all files in `.claude/prompts/` to function correctly. Don't skip copying prompts!
 ====
 
+==== Option C: Advanced Users (Existing Configuration)
+
+If you already have custom configurations in `~/.claude/` (like `settings.json`, other skills, or custom prompts):
+
+[source,bash]
+----
+# 1. Backup your existing configuration
+cp -r ~/.claude ~/.claude.backup
+
+# 2. Copy only Showroom skills (merge, don't overwrite)
+mkdir -p ~/.claude/skills
+cp -r .claude/skills/create-lab ~/.claude/skills/
+cp -r .claude/skills/create-demo ~/.claude/skills/
+cp -r .claude/skills/verify-content ~/.claude/skills/
+cp -r .claude/skills/blog-generate ~/.claude/skills/
+
+# 3. Copy prompts (required for verify-content)
+mkdir -p ~/.claude/prompts
+cp -r .claude/prompts/* ~/.claude/prompts/
+
+# 4. Optionally copy docs and templates
+mkdir -p ~/.claude/docs
+cp -r .claude/docs/* ~/.claude/docs/
+----
+
+[TIP]
+====
+*Merging configurations:*
+
+* *settings.json*: If you have custom Claude Code settings, add Showroom-specific settings manually (if needed)
+* *Other skills*: Showroom skills coexist with other skills - they won't conflict
+* *Custom prompts*: If you have custom prompts in `~/.claude/prompts/`, they coexist with Showroom prompts
+* *Hooks*: If you have custom hooks, you can merge `.claude/hooks/` manually
+
+After merging, verify all your existing skills still work:
+
+[source,bash]
+----
+claude
+/help  # Should show both your skills and Showroom skills
+----
+====
+
 === Step 3: Verify Installation
 
 Test that skills are properly installed and discovered by Claude Code.

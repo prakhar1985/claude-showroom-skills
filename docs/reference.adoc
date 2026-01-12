@@ -23,6 +23,13 @@ See link:setup.html[Setup & Installation Guide] for complete installation instru
 
 TIP: Skills must be installed to `~/.claude/` (home directory) for global access across all projects.
 
+[NOTE]
+====
+*Advanced users with existing `~/.claude/` configuration:*
+
+See link:setup.html#option-c-advanced-users-existing-configuration[Setup Guide - Option C] for instructions on merging Showroom skills with your existing settings, custom skills, and prompts without overwriting.
+====
+
 == Available Skills
 
 [cols="1,2,2"]
