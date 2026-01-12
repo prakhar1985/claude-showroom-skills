@@ -34,14 +34,19 @@ jobs:
       - name: Build AsciiDoc files
         run: |
           mkdir -p _site
+          # Copy CSS
+          cp docs/asciidoctor.css _site/
           # Convert index
-          asciidoctor -D _site docs/index.adoc
+          asciidoctor -a stylesheet=asciidoctor.css -a linkcss -D _site docs/index.adoc
           # Convert all other adoc files
           find docs -name "*.adoc" ! -name "index.adoc" -exec sh -c '
             for file; do
               dir=$(dirname "$file")
               mkdir -p "_site/${dir#docs/}"
-              asciidoctor -D "_site/${dir#docs/}" "$file"
+              # Calculate relative path to CSS
+              depth=$(echo "${dir#docs/}" | grep -o "/" | wc -l)
+              css_path=$(printf '../%.0s' $(seq 1 $depth))asciidoctor.css
+              asciidoctor -a stylesheet="$css_path" -a linkcss -D "_site/${dir#docs/}" "$file"
             done
           ' sh {} +
           # Copy any images or assets

@@ -2,6 +2,21 @@
 
 Guided workflow for creating hands-on workshop modules that meet Red Hat quality standards.
 
+++++
+<div class="nav-menu">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../setup.html">Setup</a></li>
+    <li><a href="verify-content.html">Verify Content</a></li>
+    <li><a href="create-lab.html">Create Lab</a></li>
+    <li><a href="create-demo.html">Create Demo</a></li>
+    <li><a href="../reference.html">Quick Reference</a></li>
+    <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+  </ul>
+</div>
+++++
+
 == What It Does
 
 The `/create-lab` skill guides you through creating workshop content with:
