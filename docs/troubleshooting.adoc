@@ -1,0 +1,804 @@
+= Troubleshooting & FAQ
+
+Solutions to common installation and usage issues.
+
+== Installation Issues
+
+=== Skills Not Appearing in /help
+
+*Problem:* After copying `.claude/` directory, skills don't appear when running `/help`
+
+*Symptoms:*
+
+[source,bash]
+----
+$ claude
+Claude Code> /help
+
+# Skills section is empty or missing verify-content, create-lab, create-demo
+----
+
+*Possible causes and solutions:*
+
+==== 1. Files not copied to correct location
+
+*Check:*
+
+[source,bash]
+----
+ls -la ~/.claude/skills/
+----
+
+*Expected output:*
+
+----
+~/.claude/skills/
+├── create-lab/
+│   └── SKILL.md
+├── create-demo/
+│   └── SKILL.md
+├── verify-content/
+│   └── SKILL.md
+└── blog-generate/
+    └── SKILL.md
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Re-copy from nookbag template
+cd /path/to/showroom-template-nookbag
+cp -r .claude/skills ~/.claude/
+----
+
+==== 2. SKILL.md frontmatter formatting issue
+
+*Check:*
+
+[source,bash]
+----
+head -5 ~/.claude/skills/verify-content/SKILL.md
+----
+
+*Expected output (MUST start with --- on line 1):*
+
+----
+---
+name: verify-content
+description: Validate workshop/demo content quality
+...
+----
+
+*Wrong format (blank line before ---):*
+
+----
+
+---
+name: verify-content
+...
+----
+
+*Fix:*
+
+Ensure `---` starts on the very first line with NO blank lines before it.
+
+==== 3. Claude Code needs restart
+
+*Problem:* Skills were copied while Claude Code was running
+
+*Fix:*
+
+[source,bash]
+----
+# Exit Claude Code
+exit
+
+# Restart Claude Code
+claude
+
+# Check skills
+/help
+----
+
+==== 4. File permissions issue
+
+*Check:*
+
+[source,bash]
+----
+ls -la ~/.claude/skills/verify-content/SKILL.md
+----
+
+*Expected:* File should be readable (`-rw-r--r--` or similar)
+
+*Fix:*
+
+[source,bash]
+----
+chmod 644 ~/.claude/skills/*/SKILL.md
+----
+
+=== Prompts Not Found (verify-content errors)
+
+*Problem:* `/verify-content` fails with "prompts not found" error
+
+*Symptoms:*
+
+----
+Error: Could not find verification prompts in ~/.claude/prompts/
+----
+
+*Cause:* Prompts directory not copied or incomplete
+
+*Check:*
+
+[source,bash]
+----
+ls -la ~/.claude/prompts/
+----
+
+*Expected output (11 files):*
+
+----
+~/.claude/prompts/
+├── enhanced_verification_workshop.txt
+├── enhanced_verification_demo.txt
+├── redhat_style_guide_validation.txt
+├── verify_accessibility_compliance_workshop.txt
+├── verify_accessibility_compliance_demo.txt
+├── verify_technical_accuracy_workshop.txt
+├── verify_technical_accuracy_demo.txt
+├── verify_workshop_structure.txt
+├── verify_demo_structure.txt
+├── verify_content_quality.txt
+└── verify_asciidoc_formatting.txt
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Copy prompts from nookbag template
+cd /path/to/showroom-template-nookbag
+cp -r .claude/prompts ~/.claude/
+
+# Verify all files present
+ls ~/.claude/prompts/ | wc -l
+# Should output: 11
+----
+
+=== Git Clone Fails
+
+*Problem:* Cannot clone nookbag template repository
+
+*Symptoms:*
+
+[source,bash]
+----
+$ git clone https://github.com/rhpds/showroom-template-nookbag.git
+fatal: repository not found
+----
+
+*Possible causes:*
+
+==== 1. Repository is private (requires authentication)
+
+*Fix:*
+
+[source,bash]
+----
+# Use SSH instead of HTTPS
+git clone git@github.com:rhpds/showroom-template-nookbag.git
+
+# OR configure GitHub credentials
+gh auth login
+----
+
+==== 2. Network/firewall issue
+
+*Check:*
+
+[source,bash]
+----
+ping github.com
+----
+
+*Fix:*
+
+* Verify internet connection
+* Check corporate firewall/proxy settings
+* Try from different network
+
+== Skill Usage Issues
+
+=== /verify-content Takes Too Long
+
+*Problem:* Verification runs for more than 2-3 minutes
+
+*Possible causes:*
+
+==== 1. Too many files (>20 modules)
+
+*Check:*
+
+[source,bash]
+----
+find content/modules/ROOT/pages/ -name "*.adoc" | wc -l
+----
+
+*Solutions:*
+
+* Break large workshops into multiple projects
+* Verify subsections separately
+* Archive old modules not actively being edited
+
+==== 2. Large files (>500 lines each)
+
+*Check:*
+
+[source,bash]
+----
+wc -l content/modules/ROOT/pages/*.adoc
+----
+
+*Solution:*
+
+Split large modules into smaller files:
+
+----
+❌ Before: 03-module-01-everything.adoc (800 lines)
+
+✅ After:
+   03-module-01-part1-setup.adoc (300 lines)
+   04-module-01-part2-deploy.adoc (300 lines)
+   05-module-01-part3-verify.adoc (200 lines)
+----
+
+==== 3. Network latency to Claude API
+
+*Check:*
+
+[source,bash]
+----
+ping api.anthropic.com
+----
+
+*Solution:*
+
+* Verify stable internet connection
+* Try again during off-peak hours
+* Check corporate proxy/VPN isn't throttling
+
+=== /create-lab Overwrites Existing Files
+
+*Problem:* Running `/create-lab` or `/create-demo` overwrites custom edits
+
+*Cause:* Skill regenerates files if they match expected patterns
+
+*Prevention:*
+
+[source,bash]
+----
+# Always use version control
+git init
+git add .
+git commit -m "Before running create-lab"
+
+# If files overwritten, restore from git
+git checkout HEAD -- filename.adoc
+----
+
+*Best practice:*
+
+* Run `/create-lab --new` only once per workshop
+* Use `/create-lab --continue` for additional modules
+* Manually edit files between skill runs
+* Commit after each major change
+
+=== /create-lab Doesn't Detect Existing Modules
+
+*Problem:* Running `/create-lab --continue` but skill thinks it's a new workshop
+
+*Symptoms:*
+
+----
+Skill: "This is a NEW workshop (creating from scratch)."
+# But you already have 3 modules!
+----
+
+*Possible causes:*
+
+==== 1. Incorrect file naming
+
+*Check:*
+
+[source,bash]
+----
+ls content/modules/ROOT/pages/
+----
+
+*Expected pattern:*
+
+----
+00-index.adoc
+01-overview.adoc
+02-details.adoc
+03-module-01-setup.adoc        ← Must match this pattern
+04-module-02-deploy.adoc       ← Must match this pattern
+----
+
+*Wrong patterns:*
+
+----
+module-01-setup.adoc          ❌ Missing "03-" prefix
+03-setup.adoc                 ❌ Missing "module-01-" part
+03-module-1-setup.adoc        ❌ "1" instead of "01"
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Rename files to correct pattern
+mv module-01-setup.adoc 03-module-01-setup.adoc
+mv 03-setup.adoc 03-module-01-setup.adoc
+----
+
+==== 2. Files in wrong directory
+
+*Check:*
+
+[source,bash]
+----
+pwd
+# Should be in: /path/to/showroom-project/content/modules/ROOT/pages/
+----
+
+*Fix:*
+
+[source,bash]
+----
+cd content/modules/ROOT/pages/
+# Then run /create-lab --continue
+----
+
+==== 3. Missing index/overview/details files
+
+*Requirement:* For `/create-lab --continue`, these files must exist:
+
+* `00-index.adoc`
+* `01-overview.adoc`
+* `02-details.adoc`
+
+*Fix:*
+
+Run `/create-lab --new` first to generate foundation files.
+
+=== AgnosticV Integration Fails
+
+*Problem:* Skill cannot extract variables from AgnosticV catalog
+
+*Symptoms:*
+
+----
+Warning: Could not parse AgnosticV catalog.yaml
+Using placeholder attributes instead.
+----
+
+*Cause:* Catalog format doesn't match expected structure
+
+*Solution 1: Skip AgnosticV integration*
+
+When asked "Are you creating this for RHDP?", answer *No*.
+
+*Solution 2: Manual variable definition*
+
+Edit `content/modules/ROOT/partials/_attributes.adoc`:
+
+[source,asciidoc]
+----
+:guid: a1b2c3
+:ocp_version: 4.18
+:web_console_url: https://console-openshift-console.apps.cluster.example.com
+:username: user1
+----
+
+*Solution 3: Fix catalog.yaml format*
+
+Ensure `user_data` section follows this structure:
+
+[source,yaml]
+----
+# catalog.yaml
+user_data:
+  web_console_url: "https://..."
+  username: "admin"
+  password: "xxxxx"
+----
+
+== Content Quality Issues
+
+=== External Links Not Opening in New Tab
+
+*Problem:* Verification reports "external links missing ^ caret"
+
+*Example issue:*
+
+[source,asciidoc]
+----
+See link:https://docs.redhat.com[Red Hat Documentation] for details.
+----
+
+*Fix:*
+
+[source,asciidoc]
+----
+See link:https://docs.redhat.com[Red Hat Documentation^] for details.
+                                                        ↑ Add caret here
+----
+
+*Why:* External links without `^` replace current tab, causing learners to lose their place.
+
+=== Lists Render Without Spacing
+
+*Problem:* Lists appear squished together when rendered
+
+*Example issue:*
+
+[source,asciidoc]
+----
+**Prerequisites:**
+* OpenShift 4.18
+* Admin access
+Next section starts here...
+----
+
+*Fix:*
+
+[source,asciidoc]
+----
+**Prerequisites:**
+
+* OpenShift 4.18
+* Admin access
+
+Next section starts here...
+----
+
+*Why:* AsciiDoc requires blank lines before and after lists for proper spacing.
+
+=== Images Not Clickable
+
+*Problem:* Verification reports "images missing link=self,window=blank"
+
+*Example issue:*
+
+[source,asciidoc]
+----
+image::diagram.png[System architecture,width=600]
+----
+
+*Fix:*
+
+[source,asciidoc]
+----
+image::diagram.png[System architecture,link=self,window=blank,width=600]
+----
+
+*Why:* Clickable images allow learners to view full-size versions in new tabs.
+
+=== Em Dashes in Content
+
+*Problem:* Verification reports "em dashes found in content"
+
+*Example issue:*
+
+[source,asciidoc]
+----
+OpenShift—Red Hat's platform—simplifies deployments.
+        ↑              ↑ Em dashes (—)
+----
+
+*Fix Option 1: Use commas*
+
+[source,asciidoc]
+----
+OpenShift, Red Hat's platform, simplifies deployments.
+----
+
+*Fix Option 2: Use periods*
+
+[source,asciidoc]
+----
+OpenShift simplifies deployments. Red Hat's platform provides...
+----
+
+*Why:* Red Hat Style Guide prohibits em dashes. Use commas or periods instead.
+
+=== Product Name Abbreviations
+
+*Problem:* Verification reports "product name abbreviations found"
+
+*Example issue:*
+
+[source,asciidoc]
+----
+Deploy your app to OCP using the CLI.
+                   ↑ Abbreviation
+----
+
+*Fix:*
+
+[source,asciidoc]
+----
+Deploy your application to Red Hat OpenShift using the command line.
+----
+
+*Common abbreviations to avoid:*
+
+* OCP → Red Hat OpenShift
+* RHEL → Red Hat Enterprise Linux
+* ODF → Red Hat OpenShift Data Foundation
+* ACM → Red Hat Advanced Cluster Management
+* ACS → Red Hat Advanced Cluster Security
+
+*Why:* Red Hat Style Guide requires full product names on first use and in headings.
+
+== Cursor IDE Issues
+
+=== Skills Not Loading in Cursor
+
+*Problem:* Slash commands don't work in Cursor IDE
+
+*Symptoms:*
+
+----
+/verify-content
+# Cursor shows: "Command not found"
+----
+
+*Possible causes:*
+
+==== 1. Skills not in project .claude/ directory
+
+*Check:*
+
+[source,bash]
+----
+ls -la .claude/skills/
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Copy skills to project directory
+cp -r ~/.claude/skills ./.claude/
+----
+
+[NOTE]
+====
+Cursor reads skills from both `~/.claude/` (global) and `.claude/` (project-specific).
+====
+
+==== 2. Cursor skills feature not enabled
+
+*Fix:*
+
+1. Open Cursor Settings (Cmd+, or Ctrl+,)
+2. Search for "Claude Code"
+3. Enable "Custom Skills Support"
+4. Restart Cursor
+
+==== 3. SKILL.md format issue
+
+See <<2. SKILL.md frontmatter formatting issue>> above.
+
+== Platform-Specific Issues
+
+=== macOS: Permission Denied
+
+*Problem:*
+
+[source,bash]
+----
+cp -r .claude ~/.claude
+Permission denied
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Check home directory permissions
+ls -ld ~
+
+# If needed, create .claude directory first
+mkdir -p ~/.claude
+
+# Retry copy
+cp -r .claude/* ~/.claude/
+----
+
+=== Windows (WSL2): Line Ending Issues
+
+*Problem:* Skills don't load, SKILL.md appears corrupted
+
+*Cause:* Windows line endings (CRLF) instead of Unix (LF)
+
+*Fix:*
+
+[source,bash]
+----
+# Convert line endings
+find ~/.claude/skills/ -name "SKILL.md" -exec dos2unix {} \;
+
+# If dos2unix not installed
+sudo apt install dos2unix
+----
+
+=== Linux: SELinux Blocking Access
+
+*Problem:* Files copied but Claude Code can't read them
+
+*Check:*
+
+[source,bash]
+----
+ls -lZ ~/.claude/skills/verify-content/SKILL.md
+----
+
+*Fix:*
+
+[source,bash]
+----
+# Restore default SELinux context
+restorecon -R ~/.claude/
+----
+
+== Getting Help
+
+If you've tried these solutions and still have issues:
+
+=== 1. Check Existing Issues
+
+Search for similar problems:
+
+* link:https://github.com/psrivast/claude-showroom-skills/issues[GitHub Issues - claude-showroom-skills^]
+* link:https://github.com/rhpds/showroom-template-nookbag/issues[GitHub Issues - showroom-template-nookbag^]
+
+=== 2. Red Hat Internal Support
+
+For Red Hat employees:
+
+* *Slack*: #demo-platform channel
+* *Email*: rhdp-support@redhat.com
+
+=== 3. File a New Issue
+
+If your problem is new:
+
+1. *Gather information:*
++
+[source,bash]
+----
+# Operating system
+uname -a
+
+# Claude Code version
+claude --version
+
+# Skill files present
+ls -la ~/.claude/skills/
+
+# Prompt files present
+ls -la ~/.claude/prompts/
+----
+
+2. *Create issue* at link:https://github.com/psrivast/claude-showroom-skills/issues/new[GitHub Issues^]
+
+3. *Include:*
+   * Operating system (macOS, Linux, Windows WSL2)
+   * Claude Code or Cursor IDE version
+   * Exact error message
+   * Steps to reproduce
+   * Output from information-gathering commands above
+
+== Frequently Asked Questions
+
+=== Can I use these skills without RHDP?
+
+*Yes!* The skills work with any Showroom project, not just RHDP deployments. When asked about AgnosticV integration, simply answer "No" and use placeholder attributes.
+
+=== Do I need all the prompts for verify-content to work?
+
+*Yes.* The `/verify-content` skill requires all 11 prompt files in `~/.claude/prompts/`. Missing even one file will cause verification to fail.
+
+=== Can I customize the skills?
+
+*Yes, but with caution.* You can edit `~/.claude/skills/*/SKILL.md` files, but:
+
+[WARNING]
+====
+Updates to the nookbag template will overwrite your changes. Consider maintaining a fork instead.
+====
+
+=== How do I update skills when nookbag is updated?
+
+[source,bash]
+----
+# Navigate to nookbag template
+cd /path/to/showroom-template-nookbag
+
+# Pull latest changes
+git pull origin main
+
+# Backup your current skills (if customized)
+cp -r ~/.claude ~/.claude.backup
+
+# Copy updated skills
+cp -r .claude ~/.claude
+
+# Restart Claude Code
+----
+
+=== Can I use these skills in VS Code?
+
+*No.* These skills are designed for Claude Code CLI and Cursor IDE, which have built-in skill support. VS Code does not natively support Claude Code skills.
+
+*Alternatives:*
+
+* Use Claude Code CLI in terminal
+* Use Cursor IDE (VS Code fork with Claude integration)
+
+=== Why does verification take so long?
+
+Each verification check involves:
+
+1. Reading all .adoc files
+2. Sending content to Claude API
+3. Running 11 different validation prompts
+4. Generating detailed markdown report
+
+For large workshops (>10 modules), this can take 2-3 minutes. This is normal and ensures thorough quality checks.
+
+=== What's the difference between create-lab and create-demo?
+
+[cols="1,2,2"]
+|===
+|Aspect |create-lab |create-demo
+
+|*Audience*
+|Learners (hands-on)
+|Viewers (presenter-led)
+
+|*Structure*
+|Learning objectives + exercises
+|Know/Show (business + technical)
+
+|*Verification*
+|Mandatory checkpoints
+|Optional
+
+|*Focus*
+|Skill building
+|Business value
+
+|*Duration*
+|30-45 min per module
+|10-15 min per module
+|===
+
+=== Can I mix workshops and demos in one project?
+
+*Not recommended.* Workshops and demos have different structures and purposes. Create separate Showroom projects for each type.
+
+== Related Resources
+
+* link:setup.adoc[Setup Guide] - Installation instructions
+* link:skills/verify-content.adoc[Verify Content] - Validation skill documentation
+* link:skills/create-lab.adoc[Create Lab] - Workshop creation skill
+* link:skills/create-demo.adoc[Create Demo] - Demo creation skill
+* link:reference.adoc[Quick Reference] - Command cheatsheet
+* link:https://code.claude.com/docs[Official Claude Code Docs^]

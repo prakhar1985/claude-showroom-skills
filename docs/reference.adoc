@@ -1,29 +1,13 @@
----
-layout: default
-title: Quick Reference
-nav_order: 6
-description: "Quick reference guide for Showroom Skills commands and patterns"
----
-
-# Quick Reference
-{: .no_toc }
+= Quick Reference
 
 Cheatsheet for common commands, patterns, and standards.
-{: .fs-6 .fw-300 }
 
-## Table of contents
-{: .no_toc .text-delta }
+== Installation
 
-1. TOC
-{:toc}
+=== One-Time Setup
 
----
-
-## Installation
-
-### One-Time Setup
-
-```bash
+[source,bash]
+----
 # Clone nookbag template
 git clone https://github.com/rhpds/showroom-template-nookbag.git
 cd showroom-template-nookbag
@@ -36,26 +20,37 @@ claude
 
 # Verify installation
 /help
-```
+----
 
----
+== Available Skills
 
-## Available Skills
+[cols="1,2,2"]
+|===
+|Command |Purpose |Use Case
 
-| Command | Purpose | Use Case |
-|---------|---------|----------|
-| `/verify-content` | Validate content quality | Before publishing, after reviews |
-| `/create-lab` | Create workshop module | Hands-on learning content |
-| `/create-demo` | Create demo module | Presenter-led demonstrations |
-| `/blog-generate` | Transform to blog post | Marketing content, developer blogs |
+|`/verify-content`
+|Validate content quality
+|Before publishing, after reviews
 
----
+|`/create-lab`
+|Create workshop module
+|Hands-on learning content
 
-## Common Workflows
+|`/create-demo`
+|Create demo module
+|Presenter-led demonstrations
 
-### Creating a New Workshop
+|`/blog-generate`
+|Transform to blog post
+|Marketing content, developer blogs
+|===
 
-```bash
+== Common Workflows
+
+=== Creating a New Workshop
+
+[source,bash]
+----
 # Navigate to project
 cd ~/showroom-my-workshop
 
@@ -77,13 +72,12 @@ claude
 
 # Fix issues and re-validate
 /verify-content
-```
+----
 
----
+=== Creating a New Demo
 
-### Creating a New Demo
-
-```bash
+[source,bash]
+----
 # Navigate to project
 cd ~/showroom-my-demo
 
@@ -102,13 +96,12 @@ claude
 
 # Validate content
 /verify-content
-```
+----
 
----
+=== Validating Existing Content
 
-### Validating Existing Content
-
-```bash
+[source,bash]
+----
 # Navigate to project with existing content
 cd ~/showroom-existing-project
 
@@ -123,15 +116,13 @@ claude
 
 # Fix issues and re-run
 /verify-content
-```
+----
 
----
+== File Locations
 
-## File Locations
+=== Global Skills Directory
 
-### Global Skills Directory
-
-```
+----
 ~/.claude/
 ├── skills/                    # Skill definitions
 │   ├── create-lab/
@@ -151,11 +142,11 @@ claude
 │
 └── docs/                      # Shared rules
     └── SKILL-COMMON-RULES.md
-```
+----
 
-### Project Content Directory
+=== Project Content Directory
 
-```
+----
 content/modules/ROOT/
 ├── pages/
 │   ├── 00-index.adoc         # Landing page
@@ -169,207 +160,251 @@ content/modules/ROOT/
 │   └── _attributes.adoc      # Version variables
 │
 └── nav.adoc                  # Navigation menu
-```
+----
 
----
+== Common Validation Fixes
 
-## Common Validation Fixes
+=== External Links (Missing Caret)
 
-### External Links (Missing Caret)
+*Problem:*
 
-**Problem:**
-```asciidoc
+[source,asciidoc]
+----
 link:https://docs.redhat.com[Red Hat Documentation]
-```
+----
 
-**Fix:**
-```asciidoc
+*Fix:*
+
+[source,asciidoc]
+----
 link:https://docs.redhat.com[Red Hat Documentation^]
                                                    ↑ Add caret
-```
+----
 
----
+=== Lists (Missing Blank Lines)
 
-### Lists (Missing Blank Lines)
+*Problem:*
 
-**Problem:**
-```asciidoc
+[source,asciidoc]
+----
 **Prerequisites:**
 * OpenShift 4.18
 * Admin access
 Next section...
-```
+----
 
-**Fix:**
-```asciidoc
+*Fix:*
+
+[source,asciidoc]
+----
 **Prerequisites:**
 
 * OpenShift 4.18
 * Admin access
 
 Next section...
-```
+----
 
----
+=== Images (Not Clickable)
 
-### Images (Not Clickable)
+*Problem:*
 
-**Problem:**
-```asciidoc
+[source,asciidoc]
+----
 image::diagram.png[System architecture,width=600]
-```
+----
 
-**Fix:**
-```asciidoc
+*Fix:*
+
+[source,asciidoc]
+----
 image::diagram.png[System architecture,link=self,window=blank,width=600]
-```
+----
 
----
+=== Em Dashes
 
-### Em Dashes
+*Problem:*
 
-**Problem:**
-```asciidoc
+[source,asciidoc]
+----
 OpenShift—Red Hat's platform—simplifies deployments.
-```
+----
 
-**Fix:**
-```asciidoc
+*Fix:*
+
+[source,asciidoc]
+----
 OpenShift, Red Hat's platform, simplifies deployments.
-```
+----
 
----
+=== Product Name Abbreviations
 
-### Product Name Abbreviations
+*Problem:*
 
-**Problem:**
-```asciidoc
+[source,asciidoc]
+----
 Deploy to OCP using the CLI.
-```
+----
 
-**Fix:**
-```asciidoc
+*Fix:*
+
+[source,asciidoc]
+----
 Deploy to Red Hat OpenShift using the command line.
-```
+----
 
----
+== Red Hat Style Essentials
 
-## Red Hat Style Essentials
-
-### Product Names
+=== Product Names
 
 Always use full product names (especially on first use and in headings):
 
-| ❌ Abbreviation | ✅ Full Name |
-|----------------|-------------|
-| OCP | Red Hat OpenShift |
-| RHEL | Red Hat Enterprise Linux |
-| ODF | Red Hat OpenShift Data Foundation |
-| ACM | Red Hat Advanced Cluster Management |
-| ACS | Red Hat Advanced Cluster Security |
-| AAP | Red Hat Ansible Automation Platform |
-| RHOAI | Red Hat OpenShift AI |
+[cols="1,1"]
+|===
+|Abbreviation |Full Name
 
----
+|OCP
+|Red Hat OpenShift
 
-### Version Attributes
+|RHEL
+|Red Hat Enterprise Linux
 
-❌ **Don't hardcode versions:**
-```asciidoc
+|ODF
+|Red Hat OpenShift Data Foundation
+
+|ACM
+|Red Hat Advanced Cluster Management
+
+|ACS
+|Red Hat Advanced Cluster Security
+
+|AAP
+|Red Hat Ansible Automation Platform
+
+|RHOAI
+|Red Hat OpenShift AI
+|===
+
+=== Version Attributes
+
+*Don't hardcode versions:*
+
+[source,asciidoc]
+----
 Install OpenShift 4.18 using...
-```
+----
 
-✅ **Use attributes:**
-```asciidoc
+*Use attributes:*
+
+[source,asciidoc]
+----
 Install Red Hat OpenShift {ocp_version} using...
-```
+----
 
-**Define in `partials/_attributes.adoc`:**
-```asciidoc
+*Define in `partials/_attributes.adoc`:*
+
+[source,asciidoc]
+----
 :ocp_version: 4.18
 :rhel_version: 9.5
 :ansible_version: 2.17
-```
+----
 
----
+=== Numbers
 
-### Numbers
+*Use numerals (not spelled out):*
 
-✅ **Use numerals (not spelled out):**
-```asciidoc
+[source,asciidoc]
+----
 5 steps
 3 modules
 10 minutes
-```
+----
 
-❌ **Don't spell out:**
-```asciidoc
+*Don't spell out:*
+
+[source,asciidoc]
+----
 five steps
 three modules
 ten minutes
-```
+----
 
----
+=== Heading Case
 
-### Heading Case
+*Use sentence case:*
 
-✅ **Use sentence case:**
-```asciidoc
+[source,asciidoc]
+----
 == Deploying your first application
 == What you will learn
-```
+----
 
-❌ **Don't use title case:**
-```asciidoc
+*Don't use title case:*
+
+[source,asciidoc]
+----
 == Deploying Your First Application
 == What You Will Learn
-```
+----
 
----
+=== Inclusive Language
 
-### Inclusive Language
+[cols="1,1"]
+|===
+|Avoid |Use Instead
 
-| ❌ Avoid | ✅ Use Instead |
-|---------|---------------|
-| whitelist | allowlist |
-| blacklist | blocklist |
-| master/slave | primary/secondary, leader/follower |
-| sanity check | confidence check, verification |
-| guys | folks, team, everyone |
+|whitelist
+|allowlist
 
----
+|blacklist
+|blocklist
 
-## AsciiDoc Formatting
+|master/slave
+|primary/secondary, leader/follower
 
-### List Markers
+|sanity check
+|confidence check, verification
 
-**Bullets (`*`) for knowledge/information:**
-```asciidoc
+|guys
+|folks, team, everyone
+|===
+
+== AsciiDoc Formatting
+
+=== List Markers
+
+*Bullets (`*`) for knowledge/information:*
+
+[source,asciidoc]
+----
 **Key concepts:**
 
 * Projects organize resources
 * Pods are the smallest deployable units
 * Services provide stable networking
-```
+----
 
-**Numbers (`.`) for sequential steps:**
-```asciidoc
+*Numbers (`.`) for sequential steps:*
+
+[source,asciidoc]
+----
 **Exercise:**
 
 . Log into OpenShift web console
 . Create new project named `my-app`
 . Deploy application from Git
-```
+----
 
----
+=== Code Blocks
 
-### Code Blocks
+*Always specify language:*
 
-**Always specify language:**
-```asciidoc
+[source,asciidoc]
+----
 [source,bash]
 ----
-oc get pods -n my-app
+ oc get pods -n my-app
 ----
 
 [source,yaml]
@@ -379,32 +414,31 @@ kind: Service
 metadata:
   name: my-service
 ----
-```
+----
 
----
+=== External Links
 
-### External Links
+*Always open in new tab (`^`):*
 
-**Always open in new tab (`^`):**
-```asciidoc
+[source,asciidoc]
+----
 See link:https://docs.redhat.com[Red Hat Documentation^] for details.
                                                         ↑
-```
+----
 
----
+=== Internal References
 
-### Internal References
+*Use xref for cross-references:*
 
-**Use xref for cross-references:**
-```asciidoc
+[source,asciidoc]
+----
 See xref:03-module-01-setup.adoc[Module 1: Setup] for details.
-```
+----
 
----
+=== Admonitions
 
-### Admonitions
-
-```asciidoc
+[source,asciidoc]
+----
 NOTE: This is informational.
 
 TIP: This is a helpful suggestion.
@@ -414,69 +448,73 @@ IMPORTANT: This is critical information.
 WARNING: This could cause issues.
 
 CAUTION: This could cause data loss.
-```
+----
 
----
+== Workshop Structure Requirements
 
-## Workshop Structure Requirements
+=== Mandatory Elements
 
-### Mandatory Elements
+Every workshop *must* include:
 
-Every workshop **must** include:
+1. *Learning objectives* in each module
++
+[source,asciidoc]
+----
+== Learning Objectives
 
-1. **Learning objectives** in each module
-   ```asciidoc
-   == Learning Objectives
+After completing this module, you will be able to:
 
-   After completing this module, you will be able to:
+* Deploy applications to Red Hat OpenShift
+* Configure application settings
+* Troubleshoot common issues
+----
 
-   * Deploy applications to Red Hat OpenShift
-   * Configure application settings
-   * Troubleshoot common issues
-   ```
+2. *Verification steps* for hands-on exercises
++
+[source,asciidoc]
+----
+=== Verify
 
-2. **Verification steps** for hands-on exercises
-   ```asciidoc
-   === Verify
+Confirm deployment succeeded:
 
-   Confirm deployment succeeded:
+[source,bash]
+----
+oc get pods -n my-app
+----
 
-   [source,bash]
-   ----
-   oc get pods -n my-app
-   ----
+Expected: Pod shows STATUS: Running
+----
 
-   Expected: Pod shows STATUS: Running
-   ```
+3. *Conclusion module* with consolidated references
++
+[source,asciidoc]
+----
+= Conclusion
 
-3. **Conclusion module** with consolidated references
-   ```asciidoc
-   = Conclusion
+== Summary
 
-   == Summary
+In this workshop, you learned:
 
-   In this workshop, you learned:
+* Key skill 1
+* Key skill 2
+* Key skill 3
 
-   * Key skill 1
-   * Key skill 2
-   * Key skill 3
+== References
 
-   == References
+* link:https://...[Red Hat Documentation^]
+* link:https://...[Product Guide^]
+----
 
-   * link:https://...[Red Hat Documentation^]
-   * link:https://...[Product Guide^]
-   ```
+== Demo Structure Requirements
 
----
-
-## Demo Structure Requirements
-
-### Know/Show Sections
+=== Know/Show Sections
 
 Every demo module has two parts:
 
-**Know (Business Context):**
-```asciidoc
+*Know (Business Context):*
+
+[source,asciidoc]
+----
 == Know: The Business Context
 
 * Customer pain point 1
@@ -485,10 +523,12 @@ Every demo module has two parts:
 
 **Industry data**: According to link:...[Gartner 2025 Report^],
 85% of enterprises face this challenge.
-```
+----
 
-**Show (Technical Demonstration):**
-```asciidoc
+*Show (Technical Demonstration):*
+
+[source,asciidoc]
+----
 == Show: What You'll Demonstrate
 
 . Step 1 with presenter notes
@@ -505,126 +545,128 @@ Every demo module has two parts:
 ****
 **Competitive advantage**: Unlike AWS, Red Hat supports hybrid cloud.
 ****
-```
+----
 
----
+== Accessibility Requirements (WCAG 2.1 AA)
 
-## Accessibility Requirements (WCAG 2.1 AA)
+=== Image Alt Text
 
-### Image Alt Text
+*Always provide descriptive alt text:*
 
-**Always provide descriptive alt text:**
-```asciidoc
+[source,asciidoc]
+----
 image::architecture-diagram.png[System architecture showing three-tier application with load balancer, application servers, and database,link=self,window=blank,width=800]
-```
+----
 
----
+=== Link Descriptions
 
-### Link Descriptions
+*Don't use "click here":*
 
-❌ **Don't use "click here":**
-```asciidoc
+[source,asciidoc]
+----
 For more info, link:url[click here].
-```
+----
 
-✅ **Use descriptive text:**
-```asciidoc
+*Use descriptive text:*
+
+[source,asciidoc]
+----
 See link:url[Red Hat OpenShift documentation^] for installation instructions.
-```
+----
 
----
+=== Heading Hierarchy
 
-### Heading Hierarchy
+*Logical order:*
 
-✅ **Logical order:**
-```asciidoc
+[source,asciidoc]
+----
 = Module Title (H1)
 == Main Section (H2)
 === Subsection (H3)
 ==== Detail (H4)
-```
+----
 
-❌ **Don't skip levels:**
-```asciidoc
+*Don't skip levels:*
+
+[source,asciidoc]
+----
 = Module Title (H1)
 === Subsection (H3)  ← Skipped H2
-```
+----
 
----
+== Command Quick Reference
 
-## Command Quick Reference
+=== Verification
 
-### Verification
-
-```bash
+[source,bash]
+----
 /verify-content              # Validate all content
-```
+----
 
-### Workshop Creation
+=== Workshop Creation
 
-```bash
+[source,bash]
+----
 /create-lab --new            # Start new workshop
 /create-lab --continue       # Add module to existing workshop
-```
+----
 
-### Demo Creation
+=== Demo Creation
 
-```bash
+[source,bash]
+----
 /create-demo --new           # Start new demo
 /create-demo --continue      # Add module to existing demo
-```
+----
 
-### Blog Generation
+=== Blog Generation
 
-```bash
+[source,bash]
+----
 /blog-generate               # Transform workshop/demo to blog post
-```
+----
 
----
+== Troubleshooting Quick Fixes
 
-## Troubleshooting Quick Fixes
+=== Skills not appearing
 
-### Skills not appearing
-
-```bash
+[source,bash]
+----
 # Re-copy skills
 cp -r /path/to/showroom-template-nookbag/.claude ~/.claude
 
 # Restart Claude Code
 exit
 claude
-```
+----
 
----
+=== Verification fails (prompts not found)
 
-### Verification fails (prompts not found)
-
-```bash
+[source,bash]
+----
 # Copy prompts
 cp -r /path/to/showroom-template-nookbag/.claude/prompts ~/.claude/
 
 # Verify all 11 files present
 ls ~/.claude/prompts/ | wc -l
 # Should output: 11
-```
+----
 
----
+=== create-lab doesn't detect existing modules
 
-### create-lab doesn't detect existing modules
-
-```bash
+[source,bash]
+----
 # Check file naming (must match pattern)
 ls content/modules/ROOT/pages/
 
 # Expected: 03-module-01-*.adoc, 04-module-02-*.adoc
 # Fix: Rename files to match pattern
-```
+----
 
----
+== Update Skills
 
-## Update Skills
-
-```bash
+[source,bash]
+----
 # Navigate to nookbag template
 cd /path/to/showroom-template-nookbag
 
@@ -637,40 +679,40 @@ cp -r .claude ~/.claude
 # Restart Claude Code
 exit
 claude
-```
+----
 
----
+== Related Resources
 
-## Related Resources
+=== Documentation
 
-### Documentation
-- [Setup Guide](setup) - Detailed installation instructions
-- [Verify Content](skills/verify-content) - Validation skill details
-- [Create Lab](skills/create-lab) - Workshop creation workflow
-- [Create Demo](skills/create-demo) - Demo creation workflow
-- [Troubleshooting](troubleshooting) - Common issues and solutions
+* link:setup.adoc[Setup Guide] - Detailed installation instructions
+* link:skills/verify-content.adoc[Verify Content] - Validation skill details
+* link:skills/create-lab.adoc[Create Lab] - Workshop creation workflow
+* link:skills/create-demo.adoc[Create Demo] - Demo creation workflow
+* link:troubleshooting.adoc[Troubleshooting] - Common issues and solutions
 
-### External Resources
-- [Official Claude Code Docs](https://code.claude.com/docs)
-- [Anthropic Skills Repository](https://github.com/anthropics/skills)
-- [Nookbag Template](https://github.com/rhpds/showroom-template-nookbag)
-- [Red Hat Style Guide](https://redhat-documentation.github.io/supplementary-style-guide/)
-- [AsciiDoc Syntax Reference](https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/)
-- [Showroom Platform Docs](https://redhat-scholars.github.io/showroom-docs/)
+=== External Resources
 
----
+* link:https://code.claude.com/docs[Official Claude Code Docs^]
+* link:https://github.com/anthropics/skills[Anthropic Skills Repository^]
+* link:https://github.com/rhpds/showroom-template-nookbag[Nookbag Template^]
+* link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Style Guide^]
+* link:https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[AsciiDoc Syntax Reference^]
+* link:https://redhat-scholars.github.io/showroom-docs/[Showroom Platform Docs^]
 
-## Getting Help
+== Getting Help
 
-### GitHub Issues
-- [claude-showroom-skills Issues](https://github.com/psrivast/claude-showroom-skills/issues)
-- [showroom-template-nookbag Issues](https://github.com/rhpds/showroom-template-nookbag/issues)
+=== GitHub Issues
 
-### Red Hat Internal
-- **Slack**: #demo-platform channel
-- **Email**: rhdp-support@redhat.com
+* link:https://github.com/psrivast/claude-showroom-skills/issues[claude-showroom-skills Issues^]
+* link:https://github.com/rhpds/showroom-template-nookbag/issues[showroom-template-nookbag Issues^]
 
----
+=== Red Hat Internal
 
-{: .note }
-> **Tip**: Bookmark this page for quick access to common commands and patterns!
+* *Slack*: #demo-platform channel
+* *Email*: rhdp-support@redhat.com
+
+[NOTE]
+====
+*Tip*: Bookmark this page for quick access to common commands and patterns!
+====
