@@ -127,23 +127,9 @@ If skills don't appear, check the link:troubleshooting.adoc[Troubleshooting] pag
 
 == Advanced Setup (For Existing Configurations)
 
-[IMPORTANT]
-====
-*This section is for advanced users who already have `~/.claude/` with:*
+If you already have skills, prompts, or custom settings in `~/.claude/`, follow these steps to add Showroom skills alongside your existing configuration:
 
-* Custom `settings.json` or other configuration files
-* Other Claude Code skills installed
-* Custom prompts or hooks
-* Any existing Claude Code setup they want to preserve
-
-If you're a new user with no existing `~/.claude/` directory, use the link:#installation-steps[Standard Installation] above instead.
-====
-
-=== Merge Showroom Skills Without Overwriting
-
-Follow these steps to add Showroom skills alongside your existing configuration:
-
-==== Step 1: Backup Your Configuration
+=== Step 1: Backup Your Configuration
 
 [source,bash]
 ----
@@ -151,7 +137,7 @@ Follow these steps to add Showroom skills alongside your existing configuration:
 cp -r ~/.claude ~/.claude.backup
 ----
 
-==== Step 2: Copy Skills Individually
+=== Step 2: Copy Skills Individually
 
 [source,bash]
 ----
@@ -169,7 +155,7 @@ cp -r .claude/skills/blog-generate ~/.claude/skills/
 cp -r .claude/skills/generate-agv-description ~/.claude/skills/
 ----
 
-==== Step 3: Copy Required Prompts
+=== Step 3: Copy Required Prompts
 
 [source,bash]
 ----
@@ -185,7 +171,7 @@ cp .claude/prompts/* ~/.claude/prompts/
 The `verify-content` skill requires all 11 prompt files to function. These prompts have unique Showroom-specific names and won't overwrite your custom prompts.
 ====
 
-==== Step 4: Optionally Copy Docs and Templates
+=== Step 4: Optionally Copy Docs and Templates
 
 [source,bash]
 ----
@@ -198,7 +184,7 @@ mkdir -p ~/.claude/templates
 cp -r .claude/templates/* ~/.claude/templates/
 ----
 
-==== Step 5: Verify Coexistence
+=== Step 5: Verify Coexistence
 
 [source,bash]
 ----
