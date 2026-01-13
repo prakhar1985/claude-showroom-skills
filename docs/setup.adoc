@@ -306,12 +306,17 @@ Unlike Claude Code CLI, Cursor does **NOT support global rules** in a home direc
 
 [TIP]
 ====
-**Creating a new Showroom from the nookbag template?** The rules are already included! Just clone and start using:
+**Creating a new Showroom from the nookbag template?** The rules are already included!
 
+1. Go to link:https://github.com/rhpds/showroom_template_nookbag[showroom_template_nookbag^]
+2. Click **"Use this template"** → **"Create a new repository"**
+3. Name your repository and click **"Create repository"**
+4. Clone your new repository:
++
 [source,bash]
 ----
-git clone https://github.com/rhpds/showroom_template_nookbag.git my-workshop
-cd my-workshop
+git clone https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+cd YOUR-REPO-NAME
 cursor .
 # Skills work immediately - no copying needed!
 ----
