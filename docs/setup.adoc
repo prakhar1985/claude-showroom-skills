@@ -304,12 +304,25 @@ Unlike Claude Code CLI (which uses slash commands like `/verify-content`), Curso
 Unlike Claude Code CLI, Cursor does **NOT support global rules** in a home directory. Skills must be in each project's `.cursor/rules/` directory.
 ====
 
-To use Showroom skills in a new project:
+[TIP]
+====
+**Creating a new Showroom from the nookbag template?** The rules are already included! Just clone and start using:
 
 [source,bash]
 ----
-# Navigate to your new Showroom project
-cd ~/my-new-showroom-project
+git clone https://github.com/rhpds/showroom_template_nookbag.git my-workshop
+cd my-workshop
+cursor .
+# Skills work immediately - no copying needed!
+----
+====
+
+**For existing Showroom projects**, copy the rules manually:
+
+[source,bash]
+----
+# Navigate to your existing Showroom project
+cd ~/my-existing-showroom-project
 
 # Copy .cursor rules from nookbag template
 cp -r /path/to/showroom_template_nookbag/.cursor .
