@@ -199,15 +199,18 @@ After installation, your `~/.claude/` directory structure looks like this:
 If you use Cursor IDE instead of Claude Code CLI:
 
 1. *Open your Showroom project in Cursor*
-2. *Skills auto-load* from the project's `.claude/skills/` directory
-3. *Use slash commands* in Cursor's chat: `/verify-content`, `/create-lab`, `/create-demo`
+2. *Skills auto-load* from the project's `.cursor/rules/` directory
+3. *Use natural language* in Cursor's chat:
+   - "create lab" or "generate workshop module"
+   - "create demo" or "presenter-led demo"
+   - "verify content" or "check quality"
 
-[NOTE]
+[IMPORTANT]
 ====
-Cursor reads skills from both `~/.claude/skills/` (global) and `.claude/skills/` (project-specific). For Showroom projects, keep skills in `~/.claude/` for global access.
+Cursor uses **natural language triggers**, NOT slash commands. Say "create lab" instead of `/create-lab`.
 ====
 
-Detailed Cursor setup: See `CURSOR-SKILLS-README.adoc` in the nookbag template.
+Detailed Cursor setup: See link:https://github.com/rhpds/showroom_template_nookbag/blob/main/CURSOR-SKILLS-README.adoc[CURSOR-SKILLS-README.adoc^] in the nookbag template.
 
 == Updating Skills
 
