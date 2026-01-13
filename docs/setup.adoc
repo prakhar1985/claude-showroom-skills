@@ -297,6 +297,46 @@ Unlike Claude Code CLI (which uses slash commands like `/verify-content`), Curso
 * *Project-specific* - Skills are tied to the project, not global like Claude Code CLI
 ====
 
+=== Using Skills in Other Projects
+
+[IMPORTANT]
+====
+Unlike Claude Code CLI, Cursor does **NOT support global rules** in a home directory. Skills must be in each project's `.cursor/rules/` directory.
+====
+
+To use Showroom skills in a new project:
+
+[source,bash]
+----
+# Navigate to your new Showroom project
+cd ~/my-new-showroom-project
+
+# Copy .cursor rules from nookbag template
+cp -r /path/to/showroom_template_nookbag/.cursor .
+
+# Copy .claude directory as well (contains shared rules and prompts)
+cp -r /path/to/showroom_template_nookbag/.claude .
+
+# Open in Cursor
+cursor .
+----
+
+**Alternative:** Use the nookbag template as your starting point for every new Showroom project:
+
+[source,bash]
+----
+# Clone nookbag template with a new name
+git clone https://github.com/rhpds/showroom_template_nookbag.git my-new-workshop
+cd my-new-workshop
+
+# Remove git history and start fresh
+rm -rf .git
+git init
+
+# Open in Cursor - skills are already configured
+cursor .
+----
+
 === Detailed Cursor Documentation
 
 For complete Cursor setup, workflow examples, and troubleshooting:
