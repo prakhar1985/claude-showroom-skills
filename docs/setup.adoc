@@ -194,23 +194,114 @@ After installation, your `~/.claude/` directory structure looks like this:
 |Reference examples for workshops and demos
 |===
 
-== Optional: Configure for Cursor IDE
+== Using Cursor IDE (Without Claude Code CLI)
 
-If you use Cursor IDE instead of Claude Code CLI:
+If you use Cursor IDE and don't have Claude Code CLI installed, you can still use all Showroom skills with natural language commands.
 
-1. *Open your Showroom project in Cursor*
-2. *Skills auto-load* from the project's `.cursor/rules/` directory
-3. *Use natural language* in Cursor's chat:
-   - "create lab" or "generate workshop module"
-   - "create demo" or "presenter-led demo"
-   - "verify content" or "check quality"
+=== Prerequisites for Cursor Users
+
+* *Cursor IDE* installed (download from link:https://cursor.sh[cursor.sh^])
+* *Git* command line tools
+* *Basic familiarity* with Cursor's chat interface
+
+=== Installation Steps for Cursor
+
+==== Step 1: Clone the Nookbag Template
+
+[source,bash]
+----
+git clone https://github.com/rhpds/showroom_template_nookbag.git
+cd showroom_template_nookbag
+----
+
+==== Step 2: Open in Cursor IDE
+
+[source,bash]
+----
+# Open the nookbag template in Cursor
+cursor .
+----
+
+Or use Cursor's File → Open Folder menu.
+
+==== Step 3: Skills Auto-Load
+
+When you open the repository in Cursor, skills automatically load from `.cursor/rules/` directory. No manual configuration needed.
+
+**What gets loaded:**
+
+* `.cursor/rules/create-lab/RULE.md` - Workshop creation skill
+* `.cursor/rules/create-demo/RULE.md` - Demo creation skill
+* `.cursor/rules/verify-content/RULE.md` - Content verification skill
+* `.cursor/rules/generate-agv-description/RULE.md` - AgV catalog generation
+
+=== How to Use Skills in Cursor
+
+Unlike Claude Code CLI (which uses slash commands like `/verify-content`), Cursor uses **natural language triggers** in the chat.
+
+==== Available Commands
+
+[cols="1,2,2"]
+|===
+|Skill |Cursor Chat Commands |What It Does
+
+|*Verify Content*
+|"verify content" +
+"check quality" +
+"validate workshop"
+|Validates content against Red Hat standards
+
+|*Create Lab*
+|"create lab" +
+"generate workshop module" +
+"new workshop"
+|Creates workshop module with guided questions
+
+|*Create Demo*
+|"create demo" +
+"presenter-led demo" +
+"generate demo module"
+|Creates presenter demo with Know/Show structure
+
+|*Generate AgV Description*
+|"generate agv description" +
+"create catalog description"
+|Generates AgnosticV catalog description file
+|===
+
+=== Example Workflow in Cursor
+
+**Creating a New Workshop:**
+
+1. Open Cursor chat (Cmd+L or Ctrl+L)
+2. Type: `create lab`
+3. Claude will ask questions one at a time
+4. Answer each question and press Enter
+5. Claude generates files automatically
+
+**Verifying Content:**
+
+1. Open Cursor chat
+2. Type: `verify content`
+3. Claude checks all .adoc files and reports issues
+4. Fix issues in the editor
+5. Type `verify content` again to re-check
 
 [IMPORTANT]
 ====
-Cursor uses **natural language triggers**, NOT slash commands. Say "create lab" instead of `/create-lab`.
+**Key Differences from Claude Code CLI:**
+
+* *No slash commands* - Use natural language: "create lab" NOT `/create-lab`
+* *Same workflow* - Questions, answers, and file generation work identically
+* *Auto-loading* - Skills load automatically when you open the project
+* *Project-specific* - Skills are tied to the project, not global like Claude Code CLI
 ====
 
-Detailed Cursor setup: See link:https://github.com/rhpds/showroom_template_nookbag/blob/main/CURSOR-SKILLS-README.adoc[CURSOR-SKILLS-README.adoc^] in the nookbag template.
+=== Detailed Cursor Documentation
+
+For complete Cursor setup, workflow examples, and troubleshooting:
+
+See link:https://github.com/rhpds/showroom_template_nookbag/blob/main/CURSOR-SKILLS-README.adoc[CURSOR-SKILLS-README.adoc^] in the nookbag template.
 
 == Updating Skills
 

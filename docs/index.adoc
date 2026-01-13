@@ -34,6 +34,10 @@ Clone nookbag template and copy skills to `~/.claude/`
 Already have `~/.claude/` with settings.json, other skills, or custom prompts? +
 Learn how to add Showroom skills without overwriting your configuration.
 
+|*Cursor IDE Users*
+|link:setup.html#using-cursor-ide-without-claude-code-cli[*Cursor Setup* →] +
+Don't have Claude Code CLI? Use Cursor IDE with natural language commands like "create lab" and "verify content"
+
 |*Quick Reference*
 |link:reference.html[*Command Cheatsheet* →] +
 Quick lookup for commands, patterns, and common fixes

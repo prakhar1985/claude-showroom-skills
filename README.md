@@ -102,7 +102,11 @@ Guides you through creating presenter demos with:
 
 Detailed installation instructions: [Setup Guide](https://psrivast.github.io/claude-showroom-skills/setup)
 
-### Quick Install
+**Choose your tool:**
+- **Claude Code CLI users**: Follow Quick Install below
+- **Cursor IDE users**: See [Cursor Setup Guide](https://psrivast.github.io/claude-showroom-skills/setup#using-cursor-ide-without-claude-code-cli)
+
+### Quick Install (Claude Code CLI)
 
 ```bash
 # Clone nookbag template
