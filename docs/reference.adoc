@@ -14,7 +14,7 @@ Cheatsheet for common commands, patterns, and standards.
     <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
-    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+    <li><a href="https://github.com/rhpds/showroom_template_nookbag">GitHub</a></li>
   </ul>
 </div>
 ++++
@@ -627,7 +627,7 @@ See link:url[Red Hat OpenShift documentation^] for installation instructions.
 [source,bash]
 ----
 # Re-copy skills
-cp -r /path/to/showroom-template-nookbag/.claude ~/.claude
+cp -r /path/to/showroom_template_nookbag/.claude ~/.claude
 
 # Restart Claude Code
 exit
@@ -639,7 +639,7 @@ claude
 [source,bash]
 ----
 # Copy prompts
-cp -r /path/to/showroom-template-nookbag/.claude/prompts ~/.claude/
+cp -r /path/to/showroom_template_nookbag/.claude/prompts ~/.claude/
 
 # Verify all 11 files present
 ls ~/.claude/prompts/ | wc -l
@@ -675,7 +675,7 @@ See link:setup.html#updating-skills[Setup Guide - Updating Skills] for instructi
 
 * link:https://code.claude.com/docs[Official Claude Code Docs^]
 * link:https://github.com/anthropics/skills[Anthropic Skills Repository^]
-* link:https://github.com/rhpds/showroom-template-nookbag[Nookbag Template^]
+* link:https://github.com/rhpds/showroom_template_nookbag[Nookbag Template^]
 * link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Style Guide^]
 * link:https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[AsciiDoc Syntax Reference^]
 * link:https://redhat-scholars.github.io/showroom-docs/[Showroom Platform Docs^]
@@ -685,7 +685,7 @@ See link:setup.html#updating-skills[Setup Guide - Updating Skills] for instructi
 === GitHub Issues
 
 * link:https://github.com/psrivast/claude-showroom-skills/issues[claude-showroom-skills Issues^]
-* link:https://github.com/rhpds/showroom-template-nookbag/issues[showroom-template-nookbag Issues^]
+* link:https://github.com/rhpds/showroom_template_nookbag/issues[showroom_template_nookbag Issues^]
 
 === Red Hat Internal
 

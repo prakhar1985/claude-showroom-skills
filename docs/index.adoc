@@ -16,7 +16,7 @@ Claude Code skills for creating high-quality Red Hat workshops and demos.
     <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
-    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+    <li><a href="https://github.com/rhpds/showroom_template_nookbag">GitHub</a></li>
   </ul>
 </div>
 ++++
@@ -77,7 +77,7 @@ Quick lookup for commands, patterns, and common fixes
 
 * link:https://code.claude.com/docs[Official Claude Code Documentation^]
 * link:https://github.com/anthropics/skills[Anthropic Skills Repository^]
-* link:https://github.com/rhpds/showroom-template-nookbag[Nookbag Template (Source Repository)^]
+* link:https://github.com/rhpds/showroom_template_nookbag[Nookbag Template (Source Repository)^]
 * link:https://redhat-documentation.github.io/supplementary-style-guide/[Red Hat Corporate Style Guide^]
 
 == Key Features

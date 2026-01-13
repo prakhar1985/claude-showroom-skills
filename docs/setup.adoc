@@ -14,7 +14,7 @@ Complete guide to installing and configuring Showroom Skills for Claude Code.
     <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
-    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+    <li><a href="https://github.com/rhpds/showroom_template_nookbag">GitHub</a></li>
   </ul>
 </div>
 ++++
@@ -37,8 +37,8 @@ The nookbag template repository contains all the skills, prompts, and templates 
 
 [source,bash]
 ----
-git clone https://github.com/rhpds/showroom-template-nookbag.git
-cd showroom-template-nookbag
+git clone https://github.com/rhpds/showroom_template_nookbag.git
+cd showroom_template_nookbag
 ----
 
 *What this gives you:*
@@ -216,7 +216,7 @@ To update skills when the nookbag template is updated:
 [source,bash]
 ----
 # Navigate to nookbag template
-cd path/to/showroom-template-nookbag
+cd path/to/showroom_template_nookbag
 
 # Pull latest changes
 git pull origin main

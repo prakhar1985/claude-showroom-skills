@@ -14,7 +14,7 @@ Solutions to common installation and usage issues.
     <li><a href="skills/generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="reference.html">Quick Reference</a></li>
     <li><a href="troubleshooting.html">Troubleshooting</a></li>
-    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+    <li><a href="https://github.com/rhpds/showroom_template_nookbag">GitHub</a></li>
   </ul>
 </div>
 ++++
@@ -65,7 +65,7 @@ ls -la ~/.claude/skills/
 [source,bash]
 ----
 # Re-copy from nookbag template
-cd /path/to/showroom-template-nookbag
+cd /path/to/showroom_template_nookbag
 cp -r .claude/skills ~/.claude/
 ----
 
@@ -177,7 +177,7 @@ ls -la ~/.claude/prompts/
 [source,bash]
 ----
 # Copy prompts from nookbag template
-cd /path/to/showroom-template-nookbag
+cd /path/to/showroom_template_nookbag
 cp -r .claude/prompts ~/.claude/
 
 # Verify all files present
@@ -193,7 +193,7 @@ ls ~/.claude/prompts/ | wc -l
 
 [source,bash]
 ----
-$ git clone https://github.com/rhpds/showroom-template-nookbag.git
+$ git clone https://github.com/rhpds/showroom_template_nookbag.git
 fatal: repository not found
 ----
 
@@ -206,7 +206,7 @@ fatal: repository not found
 [source,bash]
 ----
 # Use SSH instead of HTTPS
-git clone git@github.com:rhpds/showroom-template-nookbag.git
+git clone git@github.com:rhpds/showroom_template_nookbag.git
 
 # OR configure GitHub credentials
 gh auth login
@@ -525,7 +525,7 @@ ls -la ~/.claude/skills/
 [source,bash]
 ----
 # Ensure skills are in home directory (global)
-cp -r /path/to/showroom-template-nookbag/.claude ~/.claude
+cp -r /path/to/showroom_template_nookbag/.claude ~/.claude
 ----
 
 [IMPORTANT]
@@ -623,7 +623,7 @@ If you've tried these solutions and still have issues:
 Search for similar problems:
 
 * link:https://github.com/psrivast/claude-showroom-skills/issues[GitHub Issues - claude-showroom-skills^]
-* link:https://github.com/rhpds/showroom-template-nookbag/issues[GitHub Issues - showroom-template-nookbag^]
+* link:https://github.com/rhpds/showroom_template_nookbag/issues[GitHub Issues - showroom_template_nookbag^]
 
 === 2. Red Hat Internal Support
 
@@ -686,7 +686,7 @@ Updates to the nookbag template will overwrite your changes. Consider maintainin
 [source,bash]
 ----
 # Navigate to nookbag template
-cd /path/to/showroom-template-nookbag
+cd /path/to/showroom_template_nookbag
 
 # Pull latest changes
 git pull origin main

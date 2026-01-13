@@ -14,7 +14,7 @@ Guided workflow for creating presenter-led demonstrations that meet Red Hat qual
     <li><a href="generate-agv-description.html">Generate AgV Description</a></li>
     <li><a href="../reference.html">Quick Reference</a></li>
     <li><a href="../troubleshooting.html">Troubleshooting</a></li>
-    <li><a href="https://github.com/rhpds/showroom-template-nookbag">GitHub</a></li>
+    <li><a href="https://github.com/rhpds/showroom_template_nookbag">GitHub</a></li>
   </ul>
 </div>
 ++++

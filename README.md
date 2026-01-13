@@ -15,8 +15,8 @@ Complete guides for installation, usage, and troubleshooting.
 ### 1. Clone the Nookbag Template
 
 ```bash
-git clone https://github.com/rhpds/showroom-template-nookbag.git
-cd showroom-template-nookbag
+git clone https://github.com/rhpds/showroom_template_nookbag.git
+cd showroom_template_nookbag
 ```
 
 ### 2. Copy Skills to Your Home Directory
@@ -106,8 +106,8 @@ Detailed installation instructions: [Setup Guide](https://psrivast.github.io/cla
 
 ```bash
 # Clone nookbag template
-git clone https://github.com/rhpds/showroom-template-nookbag.git
-cd showroom-template-nookbag
+git clone https://github.com/rhpds/showroom_template_nookbag.git
+cd showroom_template_nookbag
 
 # Copy skills and prompts to home directory
 cp -r .claude ~/.claude
@@ -216,7 +216,7 @@ Common issues and solutions: [Troubleshooting Guide](https://psrivast.github.io/
 
 ```bash
 # Re-copy skills
-cp -r /path/to/showroom-template-nookbag/.claude ~/.claude
+cp -r /path/to/showroom_template_nookbag/.claude ~/.claude
 
 # Restart Claude Code
 exit
@@ -231,7 +231,7 @@ ls ~/.claude/prompts/ | wc -l
 # Should output: 11
 
 # If missing, copy prompts
-cp -r /path/to/showroom-template-nookbag/.claude/prompts ~/.claude/
+cp -r /path/to/showroom_template_nookbag/.claude/prompts ~/.claude/
 ```
 
 ---
@@ -265,7 +265,7 @@ With mentorship from **Tony**.
 
 ## Related Resources
 
-- [Nookbag Template](https://github.com/rhpds/showroom-template-nookbag) - Source repository with skills
+- [Nookbag Template](https://github.com/rhpds/showroom_template_nookbag) - Source repository with skills
 - [Official Claude Code Docs](https://code.claude.com/docs) - Claude Code documentation
 - [Anthropic Skills Repository](https://github.com/anthropics/skills) - Official skills examples
 - [Red Hat Style Guide](https://redhat-documentation.github.io/supplementary-style-guide/) - Writing standards
