@@ -22,7 +22,7 @@ cd showroom_template_nookbag
 ### 2. Copy Skills to Your Home Directory
 
 ```bash
-cp -r .claude ~/.claude
+cp -r .claude/ ~/.claude
 ```
 
 ### 3. Use the Skills
@@ -114,7 +114,7 @@ git clone https://github.com/rhpds/showroom_template_nookbag.git
 cd showroom_template_nookbag
 
 # Copy skills and prompts to home directory
-cp -r .claude ~/.claude
+cp -r .claude/ ~/.claude
 
 # Verify installation
 claude
